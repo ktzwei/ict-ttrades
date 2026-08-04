@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>仓位管理：固定风险不固定合约 | ICT-TTRades</title>
+<style>
+:root{--bg:#0f1115;--fg:#e6e8eb;--muted:#9aa3af;--accent:#4ade80;--accent2:#60a5fa;
+--card:#171a21;--line:#2a2f3a;}
+*{box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+background:var(--bg);color:var(--fg);max-width:860px;margin:0 auto;padding:40px 22px;line-height:1.8;font-size:16px}
+h1{font-size:1.8em;border-bottom:3px solid var(--accent);padding-bottom:12px;line-height:1.3}
+h2{font-size:1.35em;margin-top:44px;color:var(--accent);border-left:4px solid var(--accent);padding-left:12px}
+h3{font-size:1.1em;margin-top:28px;color:var(--accent2)}
+a{color:var(--accent2)}
+table{border-collapse:collapse;width:100%;margin:18px 0}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;font-size:.95em}
+th{background:var(--card);color:var(--accent)}
+tr:nth-child(even){background:var(--card)}
+blockquote{border-left:4px solid var(--accent2);margin:16px 0;padding:10px 18px;background:var(--card);color:var(--muted);border-radius:0 8px 8px 0}
+code{background:#232837;padding:2px 6px;border-radius:4px;font-size:.9em}
+em{color:var(--muted)}
+img{max-width:100%;border-radius:10px;border:1px solid var(--line);margin:10px 0;display:block}
+.meta{color:var(--muted);font-size:.9em;margin-bottom:24px}
+.back{display:inline-block;margin-bottom:20px;color:var(--accent);text-decoration:none;font-size:.95em}
+img::after{content:attr(alt);display:block;color:var(--muted);font-size:.85em;text-align:center}
+</style>
+</head><body>
+<p><a class="back" href="../index.html">← 返回合集目录</a></p>
+<h1>Position Sizing For Trading - Futures & Forex（仓位管理）— 中英对照学习笔记</h1>
+<blockquote>来源：TTrades — *Position Sizing For Trading - Futures & Forex*（11:13）</blockquote>
+<blockquote>概念定位：<strong>仓位管理是盈亏比体系的命门</strong>——盈亏比表（Win Rate × Risk-Reward Table）只在仓位一致时才管用。这集教你三种仓位方式、手动计算公式、Excel 速算表、TradingView 仓位工具，以及 Prop Firm（自营公司）考核的正确仓位思维。</blockquote>
+<p>---</p>
+<h2>一、核心思想（先看这个）</h2>
+<p>作者开场直接点题：</p>
+<blockquote>大家都在聊胜率和盈亏比的关系，但没人聊<strong>仓位管理</strong>。没有正确的仓位管理，胜率和盈亏比的关联根本不成立。</blockquote>
+<p>关键逻辑链：</p>
+<p>1. <strong>盈亏比表</strong>告诉你：什么胜率配什么盈亏比能盈利（如 40% 胜率 × 1:2 盈亏比 = 盈利）</p>
+<p>2. <strong>但前提是</strong>：每笔交易的风险必须一致（same risk per trade）</p>
+<p>3. <strong>固定合约数</strong>（每次下 2 张 NQ）行不通——止损大小不同时，实际风险金额乱跳（$400 / $800 / $1600）</p>
+<p>4. <strong>正确做法</strong>：固定金额风险（fixed dollar risk），根据止损大小反算合约数</p>
+<p>5. 公式：<strong>合约数 = 风险金额 ÷（每点价值 × 止损点数）</strong></p>
+<p>6. Prop Firm 考核：你的真实账户不是账面金额，是<strong>最大回撤（drawdown）</strong>——仓位要按回撤算，不能按账面算</p>
+<blockquote><strong>一句话记住</strong>：固定风险金额，不固定合约数；止损大就减合约，止损小就加合约，让每笔交易亏的钱始终一样。</blockquote>
+<p>---</p>
+<h2>二、【铁律】英文原意整理（完整版，一字不省）</h2>
+<p>*How's it going, everyone. This video is going to be about position sizing. Now, a lot of people talk about the correlation between win rate and risk-reward. However, what they don't talk about is proper position sizing. Now, without proper position sizing, the correlation between win rate and risk to reward does not work out. So let's hop into a PDF and go over this.*</p>
+<p>*Now, here we are with a win rate and risk to reward table. So what this shows is: what win rate paired with what fixed risk to reward equals profitability. So for example here, if you have a 20% win rate in a 1:1 risk-reward, it's not profitable. However, if you have a 1:2 risk-reward with a 40% win rate, then you are profitable. Now, this table only works out if you have the same risk per trade.*</p>
+<p>*Now, why is that? Well, let's take for example: I'm using a fixed 1-to-2 R system and have an expected win rate of 50%, assuming a risk of $1,000 per trade. If I take my first trade and it is a loser, I'm down 1R or $1,000. Now, if I take my next trade and it is a winner, keeping the same position size, risking $1,000, I'm up 2R or $2,000. Adding those together, I'm up 1R or $1,000. So you can see, with a fixed 1-to-2 R system at a 50% win rate, it is profitable.*</p>
+<p>*Now, let's say I was using the same fixed 1-to-2 R system with a 50% win rate. However, I was not keeping consistent position sizing. For example, on the first trade, instead of risking $1,000, I risk $2,000. After taking that loss, I am now down 2R or $2,000. But then on the next trade, when I'm risking $1,000 and hit a 2R trade, instead of being up 1R, I'm at break even. So you can see how this table only works out with consistent position sizing.*</p>
+<p>*Now, there are a few ways I can position size. I can look to keep my contract size the exact same — for example, risking two NQ contracts per trade. Or I can look to do a fixed dollar or fixed percentage, which is where I risk the same dollar value or same percentage value per trade. Let's hop into our first slide, where we go over what it looks like to keep the contract size the same, and why I prefer the other two methods.*</p>
+<p>*Let's take a look at using fixed contract size. So in this case, I'm going to be looking at using two NQ contracts for every trade, or each scenario. In this first example, risking 20 points with two NQ contracts — that gives me a risk of $800. Here, I'm risking 40 points with two NQ contracts — that gives me a risk of $1,600. Then here, I'm risking 10 points with two NQ contracts, which gives me a risk of $400. So you can see that this risk size is all over the place and not consistent.*</p>
+<p>*So why is this a problem? Well, let's say we were to take a loss on these first two trades, right? So on this first trade, -1R, -$800. Right here, -1R, -$1,600. And then we win this last trade, which is a 4R trade. However, we are only risking $400, so we only make $1,600. Due to the inconsistent sizing, although we should be up 2R, we're down $800. Let's go to the next slide and see why I prefer fixed dollar risk over having fixed contract sizes.*</p>
+<p>*Now, when using fixed dollar risk or fixed percentage risk, I'm going to adjust the contract size per trade to maintain a fixed risk of $1,000. So you can see throughout each of these trades, I have a risk of $1,000 or 1R. Now, let's use the previous example where we lost the first two trades and then won the last one, and see how this works out with consistent position sizing. And then we'll discuss how to determine our position size.*</p>
+<p>*So using that example, losing the first two trades — you can see: down 1R or $1,000. Now I'm down another R or another $1,000. But on this last trade, because I'm position sizing correctly, this 4R is actually 4R. And so then I end up being up 2R or $2,000. When, in comparison to the last slide, we were down $800.*</p>
+<p>*So how do I determine how many contracts I take? Well, it's really easy with CFDs because I can just use decimals. However, with futures contracts, you can't have half a contract. And this is why I like to use micros, because it allows more flexibility in my position size. I want to get as close to that $1,000 of risk as possible.*</p>
+<p>*Now, how do I determine how many contracts or micros I need to take? Well, I use my defined risk — in this case, $1,000 — my value per point for the instrument — so on NQ that's $20 per point — and then my stop size. So in this first example, risking $1,000 and a 20-point stop: I have 1,000 divided by 20 — because that's NQ's value per point — and then divide by 20, which is my stop size, which gives me 2.5 contracts. Now, if I want to get from contracts to micros, I just move the decimal over one or multiply by 10.*</p>
+<p>*So in this next example, with 40 points of risk, I would take 1,000 divided by 20, which is NQ's value per point, and then divide by my stop size of 40, which gives me 1.25 — or, if I multiply by 10, 12.5 micros. And since I can't take half a micro, I would round down personally. And then here in this last example, risking $1,000, NQ's value is $20 per point, and I have a 10-point stop, which gives me 5 NQ contracts or 50 micros.*</p>
+<p>*Now, although I know how to calculate my position size manually, it does take time and there are easier ways to do it. Now, there are a lot of calculators and tools out there. I've gone ahead and created two spreadsheets, which I will link in the description below, that are very simple calculators for calculating position size. I'll do a brief overview of both of those here.*</p>
+<p>*Now, taking a look at the Futures calculator here: the first thing I want to do is fill out which contracts I generally trade and the value per point for them. So you can see NQ has $20 per point, ES $50 per point. The next thing I'm going to do is fill out the account size I am trading in, and my desired risk per trade. It will then calculate my risk R per trade in a dollar value. And then, taking a look at the table below here, I can see that with what stop size, how many contracts I should be taking. So for example here, on MES, if I have a five-point stop, I'm going to be taking 10 contracts. If I have a six-point stop, I'll be taking eight contracts. I go over to MNQ — you can see if I have a 15-point stop, I'll have eight contracts; 20-point stop, six contracts. And if this doesn't go out far enough, I can just go in and adjust it — such as so — drag it down and determine the stop size I need.*</p>
+<p>*Now, taking a look at the Forex calculator: the first thing I want to do is figure out with my broker what is the price per pip or per point for each instrument that I am trading, and fill them out in this table here. From here, I then go choose my account size or type it in — so if I have a 100K account, I'll just adjust that here — my desired risk per trade, and then it will spit out a fixed dollar risk. Then, selecting which instrument I am looking to trade, my stop size in pips or points, and then it will give me a lot size for that trade. Now, with both of these sheets, make sure you file, make a copy, or else you won't be able to adjust any of this info. And please do not request access, as it just sends me a bunch of emails.*</p>
+<p>*Now, the next thing I want to discuss is using TradingView's risk-reward tool to determine position size. So you can see here I have an entry and a stop. So I want to double-click in here and make sure this information's all correct. Let's say I have a 100K account, risking 1%. Now, because I'm in Forex with EU, I want to make this lot size 1,000. So from here, you can see it spits out a quantity of 14.92% EU on a 100K account. I can load this template in and it will be correct.*</p>
+<p>*Now, if I was going to do a similar thing on Futures — and in this case, the NASDAQ — I'm going to have to adjust the settings in the risk-to-reward tool. So you can see with our current settings on the Forex, it's giving a quantity of 0.03. So I need to adjust that. And for futures, I use a 1 in the lot size — and then this is giving me the correct quantity. So to risk $1,000 with this stop size, I need 2.817 contracts or, if I'm going to be using micros, 28 micros.*</p>
+<p>*Now, before I do anything, I will want to save this as a template for a 100K account on index futures. And for this trade I would have to take 2.18 contracts. However, you cannot do that with minis, so we will drop down to the micros to take 28. And I'll show you some stuff there. So looking at the same trade on the micros, here you can see our quantity is now 28 — and that's because micros are one-tenth of a mini.*</p>
+<p>*Now, the cool thing you can do in TradingView with the risk-to-reward tool is: when you hit "Create a Limit Order" on this already created risk-to-reward tool, you can see how much you're going to risk with your stop and take profit. You can see I'm risking $994 on a $1,000 account with position sizing, using minis.*</p>
+<p>*Last thing I'm going to quickly discuss is position sizing with futures prop firm accounts. Let's say I get a 25K account. Do I have access to $25,000? No. I really have a $1,500 account, because that is the drawdown size. So if I was going to risk 1% of this account size, how much am I actually risking? I'm risking 17.7% of the drawdown size. If I was to lose six or seven trades in a row, then that account is blown. So generally, on futures prop firms, I'm not looking to risk 1% of the overall account size. Instead, I am focused on the drawdown amount.*</p>
+<p>*So for a 25K account, I have $1,500 in drawdown. I put that over here. And then from here, I can see: risking what percent of the drawdown gives me how many trades until I lose the account. So I want to look between 10 and 7% generally on these accounts, because that gives me 10 to 15 trades that I can lose in a row before losing the account. Then, going back to sheet one, I will adjust this from the account size to the drawdown size. And then I will adjust the risk per trade from 7 to 10%. And that is how I personally do it.*</p>
+<p>*Now, what I talked about there is for evaluations. Generally, once funded, I lower my risk, which gives me the ability to lose more trades and have a larger cushion. And with Forex prop firms, the concept is exactly the same — it just is different numbers. I hope you found this video helpful and insightful. If you did, please consider like and subscribing, and I'll see you guys next week.*</p>
+<p>---</p>
+<h2>三、中文翻译</h2>
+<p>大家好。这期视频讲的是<strong>仓位管理</strong>。很多人聊胜率（win rate）和盈亏比（risk-reward）的关系。但没人聊的是<strong>正确的仓位管理</strong>。没有正确的仓位管理，胜率和盈亏比的关联根本不成立。所以我们来看一个 PDF 把它讲透。</p>
+<p>现在我们看到的是一个<strong>胜率与盈亏比对照表</strong>，它展示的是：什么胜率配什么固定盈亏比，能实现盈利。比如，20% 的胜率在 1:1 盈亏比下不盈利；但如果你有 1:2 盈亏比 + 40% 胜率，那就盈利了。注意，这张表仅在<strong>每笔风险一致</strong>（same risk per trade）的前提下才成立。</p>
+<p>为什么？举例：我用一个固定的 1:2 盈亏比体系（1:2 R system），预期胜率 50%，每笔风险 $1,000。第一笔亏了——赔 1R 即 $1,000；第二笔赢了——保持相同仓位，同样风险 $1,000——我赚 2R 即 $2,000。两笔合计：我赚了 1R 即 $1,000。你看，固定 1:2 盈亏比、50% 胜率，它就是盈利的。</p>
+<p>但如果同样体系，我却<strong>没保持仓位一致</strong>：第一笔我没按 $1,000 来，而是冒了 $2,000——赔了就是 2R（$2,000）。第二笔我回归 $1,000，吃到一个 2R 利润——本该赚 1R 的，我却只打了个平手（break even）。所以你看，这张表只在仓位一致时才灵。</p>
+<p>仓位有三种方式：<strong>固定合约数</strong>（每次都下 2 张 NQ），或者<strong>固定金额/百分比风险</strong>（每笔风险同样的金额或同样的百分比）。我们来看第一张幻灯片——保持相同合约数长什么样，以及为什么我偏爱后两种。</p>
+<p>看这个固定合约数的例子：每个场景我都用 2 张 NQ 合约。第一个场景：止损 20 点，每张 NQ $20/点 → 风险 $800。第二个：止损 40 点，2 张 NQ → 风险 $1,600。第三个：止损 10 点，2 张 NQ → 风险 $400。你看，风险金额全乱了，完全不统一。</p>
+<p>这有什么问题？假设前两笔亏了——第一笔 -1R（-$800），第二笔 -1R（-$1,600）。第三笔赢了是个 4R 单——但因为只冒了 $400 的风险，实际只赚 $1,600。虽然盈亏比算下来本该净赚 2R，实际却亏了 $800。来看下一张幻灯片：为什么我偏爱固定金额风险。</p>
+<p>用固定金额/百分比风险时，我<strong>每笔调整合约数</strong>来保持风险恒定为 $1,000。你看每个交易里，我的风险都是 $1,000 即 1R。用刚才同样的例子：前两笔亏了——每笔亏 $1,000，共亏 $2,000。第三笔赢了，因为仓位算对了，这个 4R 就真是 4R——所以最终我赚了 2R 即 $2,000。和上一张比，那边是亏 $800，这边是赚 $2,000。</p>
+<p>怎么算合约数？CFD 很简单，小数点随便用。但期货合约不能要半张——所以我喜欢用<strong>微型合约（micros）</strong>，灵活多了，能尽量精确到接近 $1,000 风险。</p>
+<p>计算：<strong>合约数 = 风险金额 ÷（每点价值 × 止损点数）</strong>。第一个例子：$1,000 ÷（$20 × 20 点）= 2.5 张 NQ 合约。换成微型合约，乘以 10（挪一位小数点），就是 25 个 micros。第二个例子：40 点止损 → $1,000 ÷（$20 × 40）= 1.25 张，即 12.5 micros——不能要半个 micro，我就<strong>向下取整</strong>（round down）。第三个例子：10 点止损 → $1,000 ÷（$20 × 10）= 5 张 NQ 即 50 个 micros。</p>
+<p>虽然我手算没问题，但还是慢。市面上很多计算器，我自己做了两个 Excel 表格（链接在描述区）——很简单但够用。我来快速过一遍。</p>
+<p>先看<strong>期货计算器</strong>：先填你常交易的品种和每点价值——NQ $20/点、ES $50/点。然后填账户金额和你期望的每笔风险百分比，它会算出固定风险金额。下面是一个表：什么止损大小，对应多少合约。比如 MES（微型标普）止损 5 点 → 10 张；止损 6 点 → 8 张。MNQ 止损 15 点 → 8 张；止损 20 点 → 6 张。如果表不够长，直接往下拖就行。</p>
+<p>再看<strong>外汇计算器</strong>：先去你经纪商那儿搞清楚每个品种每点/每 pip 多少钱，填进表里。然后选账户大小或直接输入——比如 10 万美金账户——填上每笔风险百分比，它会算出固定风险金额。再选你想交易的品种和 pip/点止损，就自动给出仓位大小（lot size）。<strong>注意</strong>：这两个 Excel 都必须「文件 → 创建副本」才能编辑，别点「申请访问权限」——那只会给我发一堆邮件。</p>
+<p>接下来用 <strong>TradingView 的风险回报工具</strong>来确定仓位。你看到我画了入场和止损线，双击可以改设置。假设 10 万美金账户，风险 1%。因为我做的是外汇 EU，要把 lot size 设成 1000——然后 TV 就自动给你数量：14.92% 仓位比例。</p>
+<p>如果做期货，比如纳斯达克，就得调整风险回报工具的设置。刚才外汇设置给的数量是 0.03，不对。期货这边我把 lot size 改成 1，数字就对了。按这个止损大小、冒 $1,000 风险，需要 2.817 张合约——换成 micros 就是 28 张。</p>
+<p>先把这套设置保存为「100K 指数期货」模板。这单实际需要 2.18 张 mini 合约——但 mini 不能下非整数，所以要下去 micros：28 张。看同一单在 micros 上的显示，数量是 28——因为 micros 是 mini 的十分之一。</p>
+<p>TradingView 还有个酷功能：在已画好的风险回报工具上点「创建限价单」，你能直接看到止损和止盈各冒多少钱——这里显示我的 mini 合约在 $1,000 账户上冒了 $994 的风险。</p>
+<p>最后快速聊一下<strong>期货自营公司（Prop Firm）考核的仓位管理</strong>。假设我拿到一个 25K 账户——我真有 $25,000 吗？没有。我的真实账户是 $1,500——因为那是<strong>最大回撤（drawdown）</strong>。如果按账面 25K 的 1% 冒风险，我实际冒了回撤的 17.7%。连亏六七笔，账户就爆了。所以期货 Prop Firm 考核，我不看账面金额的 1%，我盯着回撤金额。</p>
+<p>25K 账户回撤 $1,500，我把它填进去。看表：冒回撤的百分之几，能扛多少次连亏？一般冒 7%-10%，对应 10-15 次连亏的容错空间。然后回 sheet 1，把「账户大小」改成「回撤金额」，再把每笔风险从 1% 调到 7-10%——这就是我个人的做法。</p>
+<p>上面说的是考核阶段。一旦通过拿到 Funded（实盘），我会<strong>降低风险</strong>——这样能扛更多笔连亏，留更大的缓冲（cushion）。外汇 Prop Firm 的概念完全一样，只是数字不同。希望这集对你有用。如果喜欢，请点赞订阅，下周见。</p>
+<p>---</p>
+<h2>四、关键单词解释 + 英文语法整理</h2>
+<h3>4.1 本集单词表</h3>
+<table>
+<tr><th>英文</th><th>中文</th><th>通俗解释</th></tr>
+<tr><td><strong>Position sizing</strong></td><td>仓位管理/仓位计算</td><td>决定每笔交易下多少手/多少合约</td></tr>
+<tr><td><strong>Win rate</strong></td><td>胜率</td><td>盈利交易占总交易的比例</td></tr>
+<tr><td><strong>Risk to reward (R:R)</strong></td><td>盈亏比</td><td>冒 1 块钱风险，预期赚几块钱（如 1:2）</td></tr>
+<tr><td><strong>R (Risk unit)</strong></td><td>风险单位</td><td>1R = 你每笔愿意亏的金额（如 $1,000）</td></tr>
+<tr><td><strong>Consistent position sizing</strong></td><td>一致的仓位</td><td>每笔交易的风险金额相同</td></tr>
+<tr><td><strong>Fixed contract size</strong></td><td>固定合约数</td><td>每笔永远下同样张数（作者反对）</td></tr>
+<tr><td><strong>Fixed dollar risk</strong></td><td>固定金额风险</td><td>每笔冒一样多的美元（作者推荐）</td></tr>
+<tr><td><strong>Fixed percentage risk</strong></td><td>固定百分比风险</td><td>每笔冒账户的固定%（如 1%）</td></tr>
+<tr><td><strong>Value per point</strong></td><td>每点价值</td><td>品种每波动 1 点值多少钱（NQ=$20, ES=$50）</td></tr>
+<tr><td><strong>Stop size</strong></td><td>止损点数</td><td>入场到止损的距离，单位是点（points）</td></tr>
+<tr><td><strong>Contract</strong></td><td>合约（张）</td><td>期货最小交易单位</td></tr>
+<tr><td><strong>Micros</strong></td><td>微型合约</td><td>Mini 的 1/10，允许更精细的仓位（如 MNQ, MES）</td></tr>
+<tr><td><strong>Minis</strong></td><td>迷你合约</td><td>标准合约的 1/10（如 NQ, ES）</td></tr>
+<tr><td><strong>CFD</strong></td><td>差价合约</td><td>可用小数仓位的衍生品</td></tr>
+<tr><td><strong>Lot size</strong></td><td>手数</td><td>外汇交易单位（标准手=100K 基础货币）</td></tr>
+<tr><td><strong>Break even</strong></td><td>打平/保本</td><td>不赚不亏</td></tr>
+<tr><td><strong>Prop firm</strong></td><td>自营交易公司</td><td>给你资金考核，通过后分利润</td></tr>
+<tr><td><strong>Drawdown</strong></td><td>最大回撤</td><td>Prop Firm 允许你亏的最大金额（真实账户大小）</td></tr>
+<tr><td><strong>Evaluation</strong></td><td>考核阶段</td><td>拿模拟账户证明你能盈利的阶段</td></tr>
+<tr><td><strong>Funded</strong></td><td>实盘/已通过</td><td>通过考核后拿到的真实资金账户</td></tr>
+<tr><td><strong>Cushion</strong></td><td>缓冲垫</td><td>多扛几次亏损的空间</td></tr>
+<tr><td><strong>Round down</strong></td><td>向下取整</td><td>不四舍五入，只舍不入（保守）</td></tr>
+<tr><td><strong>Pip</strong></td><td>点（外汇）</td><td>外汇最小报价单位，1 pip = 0.0001（多数货币对）</td></tr>
+<tr><td><strong>Spreadsheet</strong></td><td>电子表格</td><td>Excel/Google Sheets</td></tr>
+<tr><td><strong>Template</strong></td><td>模板</td><td>预设好参数可直接调用的配置</td></tr>
+</table>
+<h3>4.2 本集英文语法与表达整理</h3>
+<p><strong>① 条件句「without + 名词」表否定前提</strong></p>
+<blockquote>*Without proper position sizing, the correlation between win rate and risk to reward does not work out.*</blockquote>
+<ul>
+<li><code>without + 名词短语</code>：相当于 "if you don't have X"，比 if 从句更紧凑。</li>
+<li><code>work out</code>：口语高频短语，意思是「成立/行得通/算下来对」。</li>
+<li>整句：没有正确的仓位管理，胜率和盈亏比的关联就不成立。</li>
+</ul>
+<p><strong>② 「only + 条件」限定适用范围</strong></p>
+<blockquote>*This table only works out if you have the same risk per trade.*</blockquote>
+<ul>
+<li><code>only + 主句 + if 从句</code>：强调条件不可或缺——「只有在…前提下才…」。</li>
+<li>交易语境里这种限定句非常关键——不加条件表就是废的。</li>
+</ul>
+<p><strong>③ 虚拟语气「let's say + 主语 + was/were doing」</strong></p>
+<blockquote>*Let's say I was using the same fixed 1-to-2 R system with a 50% win rate. However, I was not keeping consistent position sizing.*</blockquote>
+<ul>
+<li><code>let's say + 主语 + was/were doing</code>：表假设场景（「假设我在用…」），比 <code>if I used</code> 更口语化、教学感更强。</li>
+<li><code>was not keeping</code>：过去进行时，强调「持续在做」这件事（做的过程中一直在犯错）。</li>
+</ul>
+<p><strong>④ 「due to + 名词」表因果</strong></p>
+<blockquote>*Due to the inconsistent sizing, although we should be up 2R, we're down $800.*</blockquote>
+<ul>
+<li><code>due to + 名词</code>：和 <code>because of</code> 同义，书面感稍强。</li>
+<li><code>should be ... we're ...</code>：对比「理论上应该 vs 实际上」，交易讲解常用。</li>
+</ul>
+<p><strong>⑤ 「in comparison to」做对比转折</strong></p>
+<blockquote>*When, in comparison to the last slide, we were down $800.*</blockquote>
+<ul>
+<li><code>in comparison to + 名词</code>：拿前面说过的和现在比，很自然的过渡。</li>
+<li>教学里这种对比句非常有效——两张幻灯片一张错一张对，直接点出差距。</li>
+</ul>
+<p><strong>⑥ 「get as close to … as possible」表精确追求</strong></p>
+<blockquote>*I want to get as close to that $1,000 of risk as possible.*</blockquote>
+<ul>
+<li><code>as + adj/adv + as possible</code>：常见的「尽量…」结构。</li>
+<li><code>get close to + 数字</code>：书面口语都常用。</li>
+</ul>
+<p><strong>⑦ 自问自答教学法</strong></p>
+<blockquote>*So how do I determine how many contracts I take? Well, it's really easy with CFDs because I can just use decimals. However, with futures contracts, you can't have half a contract.*</blockquote>
+<ul>
+<li>提问 → <code>Well, ...</code> → 后面接转折词 <code>However</code> 引出反例。三步递进：问题 → 简单答案 → 真实世界的约束。这是 TTrades 标志性的教学节奏。</li>
+</ul>
+<p><strong>⑧ 「go ahead and + 动词」口语化推进</strong></p>
+<blockquote>*I've gone ahead and created two spreadsheets.*</blockquote>
+<ul>
+<li><code>go ahead and do</code> = 「已经做了…」，比 <code>I created</code> 多了「我已经主动搞定」的语气。口语高频。</li>
+</ul>
+<p><strong>⑨ 「would + 动词」表习惯性做法</strong></p>
+<blockquote>*I would round down personally.*</blockquote>
+<ul>
+<li><code>would</code> 这里不是虚拟语气，是表「我通常会…」（habitual action）。</li>
+<li>交易描述里特别多：<code>I would take...</code>, <code>I would risk...</code>，都是「我的做法是…」的意思。</li>
+</ul>
+<p><strong>⑩ 设问引导式强调（rhetorical question）</strong></p>
+<blockquote>*Let's say I get a 25K account. Do I have access to $25,000? No. I really have a $1,500 account, because that is the drawdown size.*</blockquote>
+<ul>
+<li>自问 → 直接否定 → 给真相。这个技巧让听者从一个「你以为」的假设被打醒到「实际如此」。非常有力的教学手法。</li>
+</ul>
+<p>---</p>
+<h2>五、实例复盘（本集全部实战例子）</h2>
+<h3>例 1 — 盈亏比表 + 一致仓位</h3>
+<p>作者展示 PDF 表格：20% 胜率 × 1:1 盈亏比 = 不盈利；40% 胜率 × 1:2 盈亏比 = 盈利。</p>
+<p>然后用数值推演：<strong>固定 1:2 R 体系，50% 胜率，每笔 $1,000 风险</strong>：</p>
+<ul>
+<li>第一笔亏 $1,000（-1R）</li>
+<li>第二笔赚 $2,000（+2R）</li>
+<li>净赚 +$1,000 ✅</li>
+</ul>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/win_rate_table.png" alt="win_rate_table"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">win_rate_table</figcaption></figure></p>
+<p><strong>实例配图：胜率与盈亏比对照表</strong>——PDF 表格的核心：每格告诉你「什么胜率 × 什么盈亏比 = 是否盈利」。绿色格 = 盈利，红色格 = 亏损。但这张表只在仓位一致的前提下才成立。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/fixed_rr_system.png" alt="fixed_rr_system"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">fixed_rr_system</figcaption></figure></p>
+<p><strong>实例配图：固定 1:2R 体系演示</strong>——上方写出假设条件：固定 1:2R 系统，50% 胜率，每笔 $1,000 风险。下方两行计算：亏一笔 -$1,000，赢一笔 +$2,000，净赚 $1,000。</p>
+<h3>例 2 — 仓位不一致时，表无效</h3>
+<p>同样体系（50% 胜率，1:2 R），但仓位乱跳：</p>
+<ul>
+<li>第一笔冒 $2,000 → 亏 $2,000（-2R）</li>
+<li>第二笔冒 $1,000 → 赢 $2,000（+2R，但本该 +4R 才对）</li>
+<li>结果：平手（break even），本该 +$1,000 的，零蛋。</li>
+</ul>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/inconsistent_sizing.png" alt="inconsistent_sizing"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">inconsistent_sizing</figcaption></figure></p>
+<p><strong>实例配图：仓位不一致导致盈亏比表失效</strong>——PPT 上清晰对比：固定仓位时赚 $1,000，仓位飘忽时打平。红色标注 <code>Inconsistent</code> 警示：不统一 = 体系白搭。</p>
+<h3>例 3 — 固定合约数的坑</h3>
+<p>三个场景都用 2 张 NQ（NQ=$20/点）：</p>
+<ul>
+<li>止损 20 点 → 风险 $800</li>
+<li>止损 40 点 → 风险 $1,600</li>
+<li>止损 10 点 → 风险 $400</li>
+</ul>
+<p>风险跨度 $400↔$1,600，完全失控。前两笔亏（-$800 -$1,600 = -$2,400），第三笔 4R 但只赚 $1,600 → 净亏 $800。明明盈亏比表说该赚的。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/fixed_contract_size.png" alt="fixed_contract_size"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">fixed_contract_size</figcaption></figure></p>
+<p><strong>实例配图：固定合约数演示</strong>——幻灯片展示三个交易，都是 2 NQ 合约，但止损点数不同（20/40/10），导致实际风险金额 $800/$1600/$400，完全不一致。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/contract_risk_variance.png" alt="contract_risk_variance"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">contract_risk_variance</figcaption></figure></p>
+<p><strong>实例配图：固定合约数的风险波动</strong>——三列并排：NQ 合约数都是 2，每点价值 $20，停在点数不同，算出风险金额天差地别。作者用红色标出「不一致」。</p>
+<h3>例 4 — 固定金额风险，算合约数</h3>
+<p>用固定 $1,000 风险，同样三笔交易：</p>
+<ul>
+<li>每笔都冒 $1,000 → 两笔亏共 -$2,000，第三笔 4R 赚 $4,000 → 净赚 +$2,000 ✅</li>
+</ul>
+<p>公式：$1,000 ÷ ($20 × 止损点数) = 合约数</p>
+<ul>
+<li>20 点止损 → $1,000 ÷ ($20×20) = 2.5 张 = 25 micros</li>
+<li>40 点止损 → $1,000 ÷ ($20×40) = 1.25 张 = 12.5 micros → 取 12</li>
+<li>10 点止损 → $1,000 ÷ ($20×10) = 5 张 = 50 micros</li>
+</ul>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/fixed_dollar_risk.png" alt="fixed_dollar_risk"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">fixed_dollar_risk</figcaption></figure></p>
+<p><strong>实例配图：固定金额风险</strong>——每笔都冒 $1,000（1R），合约数根据止损点数调整。三列合约数不同（5/1.25/2.5），但风险恒为 $1,000。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/consistent_result.png" alt="consistent_result"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">consistent_result</figcaption></figure></p>
+<p><strong>实例配图：一致仓位的结果</strong>——同一套亏损场景（亏两笔赢一笔），因为每笔风险恒定 $1,000，最终净赚 $2,000。与固定合约数的 -$800 对比鲜明。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/position_formula.png" alt="position_formula"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">position_formula</figcaption></figure></p>
+<p><strong>实例配图：仓位计算公式</strong>——幻灯片上清晰列出：$1,000 ÷ $20 ÷ 止损点数 = 合约数。三个例子（20/40/10 点止损）分别算出 2.5/1.25/5 张合约，换算 micros 为 25/12.5/50。12.5 micros 无法执行 → 向下取整到 12。</p>
+<h3>例 5 — 期货计算器表格</h3>
+<p>填好 NQ($20)/ES($50)，账户金额、风险百分比 → 自动出表：MES 5 点止损 = 10 张，6 点 = 8 张；MNQ 15 点 = 8 张，20 点 = 6 张。止损越大 → 合约数越少。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/futures_calculator.png" alt="futures_calculator"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">futures_calculator</figcaption></figure></p>
+<p><strong>实例配图：期货仓位计算器</strong>——Google Sheets 表格：上方填品种和每点价值，中间填账户大小和风险%，下面自动生成「止损点数 → 合约数」对照表。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/contract_table.png" alt="contract_table"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">contract_table</figcaption></figure></p>
+<p><strong>实例配图：合约数对照表</strong>——红色圈出 MNQ 列：15 点止损 = 8 contracts，20 点止损 = 6 contracts。止损越大、合约越少，自动反算。</p>
+<h3>例 6 — 外汇计算器</h3>
+<p>填好每 pip 价值、账户大小、风险% → 选品种 + pip 止损 → 自动出 lot size。和期货逻辑一毛一样。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/forex_calculator.png" alt="forex_calculator"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">forex_calculator</figcaption></figure></p>
+<p><strong>实例配图：外汇仓位计算器</strong>——左侧填品种的每 pip/point 价值，上方选账户和风险%，下方选交易品种 + 止损 pip → 自动给出 Lot Size。</p>
+<h3>例 7 — TradingView 风险回报工具</h3>
+<p><strong>外汇 EU</strong>：100K 账户，风险 1%，lot size 设 1000 → 自动出数量 14.92%。</p>
+<p><strong>期货 NQ</strong>：100K 账户，风险 1%，lot size 设 1 → 自动出 2.817 张（≈ 28 micros）。</p>
+<p>保存为模板，以后直接加载。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/tv_risk_reward.png" alt="tv_risk_reward"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">tv_risk_reward</figcaption></figure></p>
+<p><strong>实例配图：TradingView 风险回报工具</strong>——图表上画出入场线（Entry）、止损线（Stop），双击可改参数。左侧面板显示账户大小、风险%、Lot size 等设置项。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/tv_forex_settings.png" alt="tv_forex_settings"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">tv_forex_settings</figcaption></figure></p>
+<p><strong>实例配图：TradingView 外汇设置</strong>——账户 100K，风险 1%，Lot Size 设为 1000（外汇专用配置），下方自动算出 Quantity = 14.92%。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/tv_futures_settings.png" alt="tv_futures_settings"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">tv_futures_settings</figcaption></figure></p>
+<p><strong>实例配图：TradingView 期货设置</strong>——切换到期货模式：Lot Size 改为 1，Quantity 显示为 2.817 合约。这是 NQ 100K 账户冒 $1,000 风险的正确仓位。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/micros_display.png" alt="micros_display"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">micros_display</figcaption></figure></p>
+<p><strong>实例配图：微型合约显示 28 micros</strong>——因 mini 不能下非整数，切换到 micros 后 Quantity 显示 28。因为 micros = mini × 10。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/tv_limit_order.png" alt="tv_limit_order"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">tv_limit_order</figcaption></figure></p>
+<p><strong>实例配图：创建限价单功能</strong>——在风险回报工具上右键 → Create Limit Order → 系统自动显示止损 $994、止盈金额。TV 帮你一键挂单同时验仓位。</p>
+<h3>例 8 — Prop Firm 仓位管理</h3>
+<p>25K 账户 → 回撤 $1,500 = 真实账户。</p>
+<p>按账面的 1% 冒 $250？不对——那是回撤的 17.7%。连亏六七笔直接炸。</p>
+<p>正确做法：按回撤 $1,500 的 7%-10% 冒风险 → 每笔冒 $105-$150 → 容错 10-15 次连亏。考核阶段用这个，拿 Funded 后降到 3-5%，建缓冲垫。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/prop_firm_drawdown.png" alt="prop_firm_drawdown"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">prop_firm_drawdown</figcaption></figure></p>
+<p><strong>实例配图：Prop Firm 回撤陷阱</strong>——25K 账户，账面金额 $25,000，但真实可亏金额是回撤 $1,500。文字解释：按账面 1%= $250，实际是回撤的 17.7%，六到七连亏就爆。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/drawdown_risk_table.png" alt="drawdown_risk_table"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">drawdown_risk_table</figcaption></figure></p>
+<p><strong>实例配图：按回撤算仓位对照表</strong>——左侧填入回撤 $1,500，右侧表：风险% × 连亏笔数对照。7%-10% 风险 = 10-15 次连亏容错。再把 sheet 1 的账户大小改成回撤金额，风险%从 1% 调到 7-10%。</p>
+<p>---</p>
+<h2>六、概念详解配图（图跟内容走，逐张详解）</h2>
+<h3>6.1 盈亏比表的潜规则</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/win_rate_table.png" alt="win_rate_table"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">win_rate_table</figcaption></figure></p>
+<p><strong>图：胜率与风险回报对照表</strong>——这份 PDF 表格是本集的理论地基。横轴是胜率（10%-90%），纵轴是盈亏比（1:1 到 1:10）。每个交叉格标出：这种组合下是赚是亏。关键是作者用红笔圈出：<strong>这张表只在「每笔风险一致」时成立</strong>——这恰恰是大多数人漏掉的前提。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/fixed_rr_system.png" alt="fixed_rr_system"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">fixed_rr_system</figcaption></figure></p>
+<p><strong>图：固定 1:2R 系统数值推演</strong>——PPT 上清晰演示：前提条件（1:2R、50% 胜率、$1,000/笔风险）→ 计算过程（亏 $1K + 赚 $2K = 净赚 $1K）。这个推演是整个视频的锚点，后面所有反例都从它出发。</p>
+<h3>6.2 仓位不一致的后果</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/inconsistent_sizing.png" alt="inconsistent_sizing"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">inconsistent_sizing</figcaption></figure></p>
+<p><strong>图：仓位飘忽导致盈亏比表作废</strong>——左边（Consistent）：按 $1,000 固定风险 → +$1,000。右边（Inconsistent）：第一笔冒 $2,000 亏了，第二笔冒 $1,000 只赚 2R → 打平。PPT 上一左一右对比，直接告诉你：盈亏比表是建立在仓位一致的地基上的，地基不稳全塌。</p>
+<h3>6.3 固定合约数 vs 固定金额风险</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/fixed_contract_size.png" alt="fixed_contract_size"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">fixed_contract_size</figcaption></figure></p>
+<p><strong>图：固定合约数的三个场景</strong>——每行一个交易，合约数固定 2 NQ，但止损大小变化（20/40/10 点），导致风险 $800/$1,600/$400 来回跳。这就是固定合约数的致命缺陷：止损大小一变，风险就失控。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/contract_risk_variance.png" alt="contract_risk_variance"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">contract_risk_variance</figcaption></figure></p>
+<p><strong>图：风险金额对比一目了然</strong>——三列数据并排：合约数、每点价值、止损点数、实际风险。红色标注突出「风险不一致」。一眼就能看出问题：做同样的 NQ，同样的 2 张，却因为止损不同而冒着完全不同级别的风险。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/fixed_dollar_risk.png" alt="fixed_dollar_risk"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">fixed_dollar_risk</figcaption></figure></p>
+<p><strong>图：固定金额风险的正确姿势</strong>——每列风险都是 $1,000（1R），合约数根据止损反向调整。止损大 → 合约少；止损小 → 合约多。列与列之间的合约数不一样，但「亏一样的钱」这个目标做到了。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/consistent_result.png" alt="consistent_result"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">consistent_result</figcaption></figure></p>
+<p><strong>图：一致仓位 → 盈利，不一致 → 亏损</strong>——两张幻灯片对比：左边固定合约亏 $800，右边固定风险赚 $2,000。同样的交易序列（输输赢），仓位管理方式不同，结果天壤之别。这是全视频最核心的结论画面。</p>
+<h3>6.4 一手怎么算：公式拆解</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/position_formula.png" alt="position_formula"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">position_formula</figcaption></figure></p>
+<p><strong>图：仓位计算公式</strong>——核心公式写在大标题下方：$1,000 ÷ $20 ÷ Stop Size。三个例子一一展开：20 点 = 2.5 合约 / 25 micros；40 点 = 1.25 / 12.5 → 向下取整到 12 micros；10 点 = 5 合约 / 50 micros。特别标注了「Can't take half a micro → round down」这个实操取舍。</p>
+<h3>6.5 两个计算器表格</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/futures_calculator.png" alt="futures_calculator"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">futures_calculator</figcaption></figure></p>
+<p><strong>图：期货仓位计算器完整界面</strong>——Google Sheets。三部分：① 品种 + 每点价值（NQ $20, ES $50）；② 账户金额 + 风险%；③ 自动生成的止损→合约对照表。绿色格子是计算结果，拖拽可延伸更多止损值。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/contract_table.png" alt="contract_table"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">contract_table</figcaption></figure></p>
+<p><strong>图：MNQ 止损-合约对照表</strong>——红框圈出 MNQ（微型纳斯达克）列。15 点止损 → 8 张合约；20 点止损 → 6 张合约。规律：止损越大，合约数越少（成反比）。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/forex_calculator.png" alt="forex_calculator"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">forex_calculator</figcaption></figure></p>
+<p><strong>图：外汇仓位计算器</strong>——同样逻辑，但参数换成 pip。左侧填各货币对的每 pip 价值，上方选账户和风险%，下方选交易品种 + 止损 pip → 出 Lot Size。Note 注释：文件 → 创建副本才能编辑，别点申请访问。</p>
+<h3>6.6 TradingView 中的仓位实战</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/tv_risk_reward.png" alt="tv_risk_reward"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">tv_risk_reward</figcaption></figure></p>
+<p><strong>图：TradingView 风险回报工具入口</strong>——K 线图上直接画工具，双击弹出设置面板。左上角是账户信息，左下角是计算选项。这个工具让你直接在图表上完成仓位计算，不用切出去用表格。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/tv_forex_settings.png" alt="tv_forex_settings"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">tv_forex_settings</figcaption></figure></p>
+<p><strong>图：外汇模式设置</strong>——关键参数：Account Size 100000, Risk 1%, Lot Size 1000（这是外汇专用的配置）。Quantity 自动输出 14.92%。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/tv_futures_settings.png" alt="tv_futures_settings"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">tv_futures_settings</figcaption></figure></p>
+<p><strong>图：期货模式设置</strong>——和外汇不同，Lot Size 改为 1（因为期货合约的单位逻辑不同）。其他参数相同（100K、1%），Quantity 变为 2.817 合约。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/micros_display.png" alt="micros_display"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">micros_display</figcaption></figure></p>
+<p><strong>图：切换到微型合约</strong>——图表左上角显示 MNQ（微型纳斯达克），Quantity 28。因为 mini 不能下 2.18 张的分数，换到 micros 后数量 ×10 ≈ 28 张。这是实操中最常见的切换场景。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/tv_limit_order.png" alt="tv_limit_order"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">tv_limit_order</figcaption></figure></p>
+<p><strong>图：一键创建限价单</strong>——在画好的工具上右键 → Create Limit Order，TV 自动帮你生成挂单并显示：止损金额 $994、止盈金额。一个动作同时完成仓位验证和下单。</p>
+<h3>6.7 Prop Firm 的仓位真相</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/prop_firm_drawdown.png" alt="prop_firm_drawdown"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">prop_firm_drawdown</figcaption></figure></p>
+<p><strong>图：账面 25K ≠ 真实 25K</strong>——幻灯片核心信息：25K 账户的 Drawdown 是 $1,500，那才是你真正能亏的钱。账面 1% = $250，但占回撤的 17.7%——这个比例足够让你连续六七笔亏损就爆仓。作者用大字强调「不是 $25,000，是 $1,500」。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/05/drawdown_risk_table.png" alt="drawdown_risk_table"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">drawdown_risk_table</figcaption></figure></p>
+<p><strong>图：按回撤算仓位 + 连亏容错表</strong>——左侧是回撤金额（$1,500），右侧是对照表：风险% 从 2% 到 15%，对应可承受连亏笔数从 50 次到 6 次。作者推荐 7%-10% 区间 = 10-15 次连亏容错。下方说明：Sheet 1 里的「账户大小」应改为「回撤金额」，风险% 从 1% 调到 7-10%。</p>
+<p>---</p>
+<h2>七、给 HYPE 实战的落地要点（我的延伸）</h2>
+<p>对照你在 HYPE-USDT 15 分钟上的玩法，这集直接落地：</p>
+<p>1. <strong>先定风险金额，再反算合约数</strong>：不用每次下同样的合约——止损大就减仓，止损小就加仓。HYPE 上 15m 止损通常 0.5%-1.5%（ATR 20-60 pips 不等），这是唯一该变的变量，风险金额不要变。</p>
+<p>2. <strong>用公式，不要凭感觉</strong>：<code>仓位大小 = 风险金额 ÷（入场到止损的距离 × 每点价值）</code>。HYPE 永续合约每点价值看合约规格。算完永远<strong>向下取整</strong>（保守）。</p>
+<p>3. <strong>盈亏比表思维</strong>：你现在的胜率是多少？如果 40%，必须 1:2 以上的盈亏比才盈利。不要幻想高胜率，用仓位管理让低胜率也能盈利（这和 HYPE 小止损、等趋势爆发的玩法天然合拍）。</p>
+<p>4. <strong>TradingView 风险回报工具直接用</strong>：在 HYPE 15m 图上画好入场/止损/止盈线，TV 自动告诉你仓位。参数设对：账户大小设你 HYPE 子账户金额，风险% 设 1%-2%。</p>
+<p>5. <strong>仓位记录表</strong>（强烈建议）：做个简单 Excel，每笔填止损距离、风险金额、实际合约数。连看 20 笔，你就能发现自己是仓位飘了导致曲线烂，还是策略本身有问题。</p>
+<p>6. <strong>回撤即真实账户</strong>：如果你做的是 Bybit/Hyperliquid 的杠杆交易，你的「真实账户」= 你能接受亏完不心疼的那部分保证金。别按总余额的 1% 算——按你能承受的最大回撤金额来反推每笔风险。</p>
+<blockquote>建议：把「今日风险金额：$XXX」写在交易日志的第一行，每天交易前看一眼。仓位管理不是「一次算好永远不变」——每笔都要重新算，止损距离一变，合约数就变。这是本集最核心的纪律。</blockquote>
+<p>---</p>
+<blockquote>笔记完成日期：2026-08-04 | 对应视频：[Position Sizing For Trading - Futures & Forex](https://www.youtube.com/watch?v=0OjlQ91TZiU) | 播放列表进度：5/140</blockquote>
+<p style="color:var(--muted);margin-top:40px;border-top:1px solid var(--line);padding-top:14px;font-size:.85em">
+ICT Concepts 学习合集 · 每集从视频字幕整理 + 图解 · 持续更新</p>
+</body></html>

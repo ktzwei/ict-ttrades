@@ -11,24 +11,6 @@ import sys, os, base64, re, subprocess, datetime
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT   = os.path.join(ROOT, "lessons")   # 每集一个 .html
 ASSETS= os.path.join(ROOT, "assets")    # 配图
-
-# ---- R2 图床配置 ----
-R2_BUCKET  = "yeyi-ai-image"          # 桶名
-R2_BASE_URL = "https://img.ktzwei.top" # 绑定的自定义域名
-R2_REMOTE  = "r2"                     # rclone 里配置的 remote 名
-from urllib.parse import quote
-
-def upload_to_r2(local_path, remote_path):
-    """把本地图片传到 R2，返回公网 URL。remote_path 不含桶名，如 ict/01/xx.png。
-    若目标已存在则跳过（不重复上传），节省流量。"""
-    dest = f"{R2_REMOTE}:{R2_BUCKET}/{remote_path}"
-    # 已存在则跳过
-    exist = subprocess.run(['rclone', 'lsf', dest],
-                           capture_output=True, timeout=30)
-    if exist.returncode != 0 or not exist.stdout.strip():
-        subprocess.run(['rclone', 'copyto', local_path, dest],
-                       check=True, capture_output=True, timeout=120)
-    return f"{R2_BASE_URL}/{quote(remote_path)}"
 CSS = """
 <style>
 :root{--bg:#0f1115;--fg:#e6e8eb;--muted:#9aa3af;--accent:#4ade80;--accent2:#60a5fa;
@@ -54,8 +36,8 @@ img::after{content:attr(alt);display:block;color:var(--muted);font-size:.85em;te
 </style>
 """
 
-def inline_images(md_text, assets_dir, prefix):
-    """把 ![alt](frames/xx.png) 转成 <img> 用 R2 图床 URL，并保留图的说明文字。"""
+def inline_images(md_text, assets_dir):
+    """把 ![alt](frames/xx.png) 转成 base64 内嵌 <img>，并保留图的说明文字。"""
     def repl(m):
         alt = m.group(1)
         src = m.group(2)
@@ -68,15 +50,14 @@ def inline_images(md_text, assets_dir, prefix):
             candidates.append(os.path.join(assets_dir, src))
         for p in candidates:
             if os.path.exists(p):
-                remote = f"{prefix}/{os.path.basename(p)}"
-                url = upload_to_r2(p, remote)
+                b64 = base64.b64encode(open(p,'rb').read()).decode()
                 return (f'<figure style="margin:22px 0">'
-                        f'<img src="{url}" alt="{alt}"/>'
+                        f'<img src="data:image/png;base64,{b64}" alt="{alt}"/>'
                         f'<figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">{alt}</figcaption></figure>')
         return f'<p style="color:#f87171">⚠️ 缺失配图: {src}</p>'
     return re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', repl, md_text)
 
-def md_to_html(md_text, prefix=None):
+def md_to_html(md_text):
     """极简 markdown 转换（够用即可）。"""
     lines = md_text.split('\n')
     html = []
@@ -103,7 +84,7 @@ def md_to_html(md_text, prefix=None):
             close_list(); close_table()
             # 后一行可能是纯说明
             html.append(re.sub(r'!\[([^\]]*)\]\(([^)]+)\)',
-                lambda mm: f'<figure style="margin:22px 0"><img src="{upload_to_r2(os.path.join(ASSETS,os.path.basename(mm.group(2))), f"{prefix}/{os.path.basename(mm.group(2))}")}" alt="{mm.group(1)}"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center">{mm.group(1)}</figcaption></figure>',
+                lambda mm: f'<figure style="margin:22px 0"><img src="data:image/png;base64,{base64.b64encode(open(os.path.join(ASSETS,os.path.basename(mm.group(2))),"rb").read()).decode()}" alt="{mm.group(1)}"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center">{mm.group(1)}</figcaption></figure>',
                 ln.strip()))
             i += 1; continue
         s = ln.strip()
@@ -150,7 +131,7 @@ def build_lesson(note_md, title, num, push=False):
                 src=os.path.join(frames_dir,f); dst=os.path.join(ASSETS,f)
                 if not os.path.exists(dst): 
                     import shutil; shutil.copy(src,dst)
-    body = md_to_html(inline_images(md, ASSETS, f"ict/{num}"), f"ict/{num}")
+    body = md_to_html(inline_images(md, ASSETS))
     slug = title.replace(' ','-').replace('，','').replace('/','-')
     fname = f"{num}-{slug}.html"
     html = f"""<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
