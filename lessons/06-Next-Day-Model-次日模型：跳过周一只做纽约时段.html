@@ -1,0 +1,298 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Next Day Model 次日模型：跳过周一，只做纽约时段 | ICT-TTRades</title>
+<style>
+:root{--bg:#0f1115;--fg:#e6e8eb;--muted:#9aa3af;--accent:#4ade80;--accent2:#60a5fa;
+--card:#171a21;--line:#2a2f3a;}
+*{box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+background:var(--bg);color:var(--fg);max-width:860px;margin:0 auto;padding:40px 22px;line-height:1.8;font-size:16px}
+h1{font-size:1.8em;border-bottom:3px solid var(--accent);padding-bottom:12px;line-height:1.3}
+h2{font-size:1.35em;margin-top:44px;color:var(--accent);border-left:4px solid var(--accent);padding-left:12px}
+h3{font-size:1.1em;margin-top:28px;color:var(--accent2)}
+a{color:var(--accent2)}
+table{border-collapse:collapse;width:100%;margin:18px 0}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;font-size:.95em}
+th{background:var(--card);color:var(--accent)}
+tr:nth-child(even){background:var(--card)}
+blockquote{border-left:4px solid var(--accent2);margin:16px 0;padding:10px 18px;background:var(--card);color:var(--muted);border-radius:0 8px 8px 0}
+code{background:#232837;padding:2px 6px;border-radius:4px;font-size:.9em}
+em{color:var(--muted)}
+img{max-width:100%;border-radius:10px;border:1px solid var(--line);margin:10px 0;display:block}
+.meta{color:var(--muted);font-size:.9em;margin-bottom:24px}
+.back{display:inline-block;margin-bottom:20px;color:var(--accent);text-decoration:none;font-size:.95em}
+img::after{content:attr(alt);display:block;color:var(--muted);font-size:.85em;text-align:center}
+</style>
+</head><body>
+<p><a class="back" href="../index.html">← 返回合集目录</a></p>
+<h1>"Next Day Model" The MMXM Trader（次日模型）— 中英对照学习笔记</h1>
+<blockquote>来源：TTrades — *"Next Day Model" The MMXM Trader - ICT Concepts*（13:35）</blockquote>
+<blockquote>概念定位：本集讲 TTrades 分享的 <strong>MMXM（Next Day）模型</strong>——一套"跳过周一、只做纽约时段、15分钟图、用经济日历当路线图、在前高周期（HTF）位被触及后的<strong>次日</strong>进场"的系统打法。核心是把"什么时候该看盘"和"看哪个周期"彻底固定下来。</blockquote>
+<p>---</p>
+<h2>一、核心思想（先看这个）</h2>
+<p>作者开场点题：这是 MMXM 在 Twitter 上发的模型，TTrades 用<strong>自顶向下（top-down analysis）</strong>拆解它：</p>
+<blockquote>这套模型包括：<strong>跳过周一（skipping Mondays）</strong>、<strong>只做纽约时段（New York session only）</strong>、<strong>在15分钟图执行（executing on the 15-minute chart）</strong>、<strong>用经济日历当路线图（economic calendar as your roadmap）</strong>、以及<strong>在你预期的高周期位（HTF level）被触及之后的次日交易（trading the day after）</strong>。</blockquote>
+<p>关键逻辑链：</p>
+<p>1. 先在<strong>日线（daily）</strong>上找到 DOL（draw on liquidity 流动性目标），比如日线 FVG、日线订单块。</p>
+<p>2. <strong>周一跳过</strong>——周一是"偷取前日高点、收回区间"的洗盘日，不做。</p>
+<p>3. 等价格触及那个高周期位（前日/前周高点、日线 FVG/OB），拿到反应（reaction）。</p>
+<p>4. <strong>次日</strong>在 15 分钟图找纽约时段的 setup：通常是"回踩 15m FVG / 老高点 / 订单块，然后位移去扫流动性"。</p>
+<p>5. 只做<strong>纽约 AM 时段</strong>，错过就让下一集/次日再来。</p>
+<blockquote><strong>一句话记住</strong>：周日线定方向，周一不碰，等高周期位被打到、次日纽约时段 15 分钟图回踩 FVG/订单块顺势进场，扫向那坨还没吃的流动性。</blockquote>
+<p>---</p>
+<h2>二、英文原意整理（带标点，完整版）</h2>
+<p>*How's it going, everyone. I've received a lot of requests for a model and more top-down analysis. So for this video, we are going to go over the MMXM Traders Twitter model. We will first look at what the model is, and then jump into a few examples using top-down analysis. And then Maxim drops a lot of information on his Twitter posts, lots of great examples. And if you scroll through his feed, you'll stumble upon this post right here, so let's take a look at it.*</p>
+<p>*So this is the model we are going to be going over in today's YouTube video. This model includes skipping Mondays, focusing on the New York session only, executing on the 15-minute chart, using the economic calendar as your roadmap, and trading the day after your anticipated higher time frame level is hit. So let's go into this example here.*</p>
+<p>*So looking at the daily chart, we have this daily fair value gap as our draw on liquidity, as noted here, and then we have a daily fair value gap above. This is Monday right here. So skipping this, we look at Tuesday. It reaches up towards our higher time frame level. Now, after we get a nice reaction off of this daily level, I'm looking for Wednesday to continue lower, taking the sell side liquidity and reaching for the draw on liquidity. Going into the hourly chart, you can see Tuesday — this is where we hit the daily fair value gap before getting an aggressive move lower. We have an hourly breaker, as we reach into Wednesday. Price retraces back up into this hourly breaker, hourly fair value gap here, and moves away.*</p>
+<p>*Looking at the 15-minute chart, we have midnight open, and that was the move into the hourly fair value gap and hourly breaker, and the move away. As we head into the New York session, we have a 15-minute fair value gap here. Price reaches up into the consequent encroachment of this before delivering to the weekly open, and eventually to the draw on liquidity below. So this is an example of the model. And I want to reiterate: skipping Monday, looking for when price reaches into that higher time frame level, looking the next day for the New York session, 15-minute setup to deliver price.*</p>
+<p>*In this next example, we have a daily order block here, and here is Monday, Tuesday, Wednesday, Thursday. Comes up, tests the daily level with this closure, it's respecting it. So going into Friday, expecting to find short setups during the New York session. Going to the hourly chart, the important thing to note is the SMT at the highs here, and this hourly fair value gap, as well as the sell stops resting below, which would be the draw on liquidity. With the news getting this wick up, however the bodies are respecting this fair value gap. Displacement down, bearish order block, and then that is the entry there, going towards the sell stops below.*</p>
+<p>*Next, we are going to look at NASDAQ on the daily chart. So if you notice right here, we just put in equal highs, so that would be a target for the future. We have bullish structure, and so I'm expecting this week to be bullish. However, this is Friday, we're going to skip Monday. Now on a bullish week, I'd want to see an open, low, high, close. And if you don't know what I'm talking about, click this link right here. With that idea in mind, what do we have right here? We have some nice lows stacked right there, as well as a candle with no wick, which I like to target. We look at Monday, what did it do? Let's zoom in here a little. Monday took previous day's high or Friday's high, closed back into the range. The next day, move towards my draw on liquidity down here. So let's drop down to the hourly and 15-minute chart and see if there's something offered during New York AM session.*</p>
+<p>*So now that we are on the hourly chart, we can see we have our Friday's high right here, that was taken out on Monday, before aggressive displacement lower. And here is our draw on liquidity mentioned on the daily chart. Let's see what happens. We ran these stops right here, could not close above, and get aggressive displacement lower. So letting this continue. We get a move up into this fair value gap, and then back down. So let's go to the 15-minute chart before New York AM session and see what appears. So here's our hourly fair value gap, and if you notice, with this candle close we have a 15-minute fair value gap right here. So ideally, I'd like to see during open, price reach up into here, and then make a move towards our draw on liquidity down here.*</p>
+<p>*And there you go, you can see our draw on liquidity was hit, and that is the move for the New York AM session. Going back out to the daily chart to see how this played out. You can see Monday took previous day high, we got a move towards this low, but what did we do once we hit our draw on liquidity down here? We came back in and closed back into the range. So now, what can we expect for Wednesday, Thursday, or until we reach this high? We can expect expansion up, and even a little more expansion than expected.*</p>
+<p>*For this next example, we are looking at Euro USD, and you can see we have sell side liquidity right here in the form of equal lows. Looking in here, we can mark out previous week's high, because that is our Wednesday. So Monday, Tuesday, Wednesday, Thursday, Friday as previous week — that's the high. Looking into Monday, letting that form. Similar to our latest NQ example, we took buy side liquidity and closed back into the range. So with this, we can expect next day to reach for lows, and you can see we have some lows right in here, as well as down here, but mainly focused on New York AM session. So dropping down to the one-hour chart. So here we are on the hourly chart on Tuesday, going to mark out the midnight open, and let this play out, and see if we get a setup for New York AM session.*</p>
+<p>*And here we are getting close to New York AM sessions, so I'm going to drop down to the 15-minute chart. You can see we had a fair value gap right here, and a fair value gap right here, supporting bearish order flow, and we have another fair value gap right here. So ideally, get a reach into here before going lower. However, that does not occur. So with it exiting and getting this large move, later New York session mostly consolidates. So we will go to the next day, Tuesday we do get a move down, but no setup for New York session. So I'm going to look for Wednesday to have a continuation lower. Going back to the one-hour chart. So now on the hourly chart, let's look to see what happens. Currently, we have a large displacement candle down, and now we have a fair value gap, so we will go ahead and mark that out. You can see how we retrace above midnight open, but we're currently respecting this fair value gap right here. All right, so as we near the New York AM session, let's hop down to the 15-minute chart. So if you look right here, when we went above midnight open, we displaced down, and we have a fair value gap right here. Price respects. So from here, I would like to see a move towards this low, that is our current sell side liquidity, before reaching for our old daily lows that we have marked up. Letting this play out, we get a move below that low, come back up into the fair value gap, and continue lower. So we'll go back out to the hourly chart. You can see where we want to see these lows right here, and ideally those equal lows on that daily chart down here. Going back to the daily chart, we get a continuation and do end up taking those lows.*</p>
+<p>*For our next example, we are still on Euro USD, and I'm looking at this order block right here. Letting Monday play at home, as this is Friday. You can see we stay inside bar and do not reach our higher time frame PD array. Tuesday, we do end up reaching into that PD array and getting a reaction off of it. So the next day, I'd want to look for a continuation lower, ideally for these lows, but we have yet to hit previous week's low as well. So here we are on the hourly chart, and we have our daily open marked out, we have sell side liquidity resting below, and then we have our daily sell side liquidity down there. So letting this play out, let's see what we get. And we get a pretty immediate drop off here. However, as we near the New York session, we come back into this range, so now we have engineered more sell side liquidity. Let's drop down to the 15-minute chart. So right here, we can see we have a 15-minute fair value gap right here, an old high in it, so that is a possible entry there. However, if we missed this one, we can still look for other entries here. Let's see if we get a fair value gap. We don't. However, we do have this old high here, it should be used as a resistance. So I'd like to see price resist off of here before reaching for this sell side and sell side below. And there we go, we reached our sell side, retest previous lows, engineer more liquidity, leave highs, then go. You can see how after we hit this order block, we take our initial sell side liquidity and displace all the way through these old lows.*</p>
+<p>*For our final example, we are going to take a look at GBP USD. So if you notice, we make a smart money reversal right here. Order flow is bullish, and we have some highs resting over here. So marking out those highs as so. Let's zoom into the daily over here. So with this being Friday, and if I'm expecting a bullish week, I'd want to see an open, low put in before expansion higher, up into these highs, and as well as Friday's high, before we put in a high in close. So letting Monday open up, Tuesday drop down, but what do we do? We respect the mean threshold of this order block here. So if we're going to get expansion in a classic Tuesday low a week, I'd want to see Wednesday expand towards Friday's high and into these old highs. So with that in mind, let's go down to the one-hour chart. Here is our midnight open, and as we make our way towards New York AM session, what do we have? Well, we have an order block or down close candle right at midnight, and then a fair value gap right here. So as we play this towards New York open. Thank you. Here on the 15-minute chart, you can see we also have a 15-minute fair value gap right here, which I will mark out in a box so we can differentiate the two. And let's see what happens here if we get a reaction. And so a pretty aggressive reaction so far, retesting midnight. And if you notice, how no bodies closed below midnight here. Now what do we get? An aggressive move out, that candle closes, we now have a fair value gap right here. Displacement out, and where do we want to see this expand towards? Friday's high, as well as those highs. Let's see what kind of expansion we get. And there we go, we take Friday's high, stay in the range, and then we'll hop out to the daily to see how this week ended up. We made a move higher, engineered more liquidity at the highs for them. Friday to reach higher. I hope you guys enjoyed this video. Thanks to MMXM for posting this model on Twitter, and I hope this cleared it up for some of you guys. If you did enjoy it, please consider liking and subscribing, and I hope you enjoy the rest of your day. See ya.*</p>
+<p>---</p>
+<h2>三、中文翻译（通俗完整版）</h2>
+<p>大家好。我收到了很多关于"一个模型"和"更多自顶向下分析"的请求。所以这期视频，我们要讲 <strong>MMXM 在 Twitter 上发的那个模型</strong>。我们先把模型是什么搞清楚，然后用自顶向下分析跳进几个例子里。Maxim 在他的 Twitter 帖子里放了很多信息，有很多好例子。如果你翻他的动态，你会碰到这个帖子，我们来看看它。</p>
+<p>所以这就是我们今天 YouTube 视频要讲的模型。这个模型包括：<strong>跳过周一</strong>、<strong>只专注纽约时段</strong>、<strong>在 15 分钟图上执行</strong>、<strong>用经济日历当你的路线图</strong>、以及<strong>在你预期的高周期（higher time frame）位被触及的次日再交易</strong>。那我们进到这个例子里看看。</p>
+<p>看日线图，我们有一个日线公允价值缺口（fair value gap）作为我们的流动性目标（draw on liquidity，DOL），就像这里标注的。然后上方还有一个日线公允价值缺口。这里就是周一。所以跳过它，我们看周二。价格向上触及我们的高周期位。现在，在我们从这个日线位拿到一个漂亮的反应（reaction）之后，我期待周三日线继续走低，吃掉卖方流动性，然后去够那个流动性目标。进到小时图，你可以看到周二——这就是我们打到日线公允价值缺口、然后出现一根激进下跌大实体之前的位置。我们有一个小时线的破坏块（breaker），在我们进入周三时。价格回踩向上进入这个小时线破坏块、小时线公允价值缺口，然后离开。</p>
+<p>看 15 分钟图，我们有午夜开盘（midnight open），那一段就是冲进小时线公允价值缺口和破坏块、然后又离开的走势。当我们进入纽约时段，这里有一个 15 分钟公允价值缺口。价格先回踩到它的<strong>后入侵（consequent encroachment，CE）</strong>区域，然后交付到周开盘（weekly open），最终交付到下方的流动性目标。这就是这套模型的一个例子。我想重申：跳过周一，等待价格触及那个高周期位，然后次日看纽约时段，15 分钟 setup 来交付价格。</p>
+<p>在下一个例子里，我们这里有一个日线订单块（order block），这里是周一、周二、周三、周四。价格上来，用这个收盘测试日线位，它在尊重它。所以进入周五，我预期在纽约时段找到做空 setup。转到小时图，重点是注意这里高点的 <strong>SMT（同步高低点背离）</strong>，还有这个小时线公允价值缺口，以及下方停着的卖止损单（sell stops）——那就是流动性目标。新闻把上影线（wick）打上来，但实体（bodies）在尊重这个公允价值缺口。向下位移，看空订单块，然后那就是进场点，奔向下方卖止损单。</p>
+<p>接下来，我们看 NASDAQ 日线图。如果你注意到这里，我们刚做出一组<strong>等高（equal highs）</strong>，所以那会是未来的目标。我们有看多结构，所以我预期这周看涨。不过这是周五，我们要跳过周一。在一个看涨周里，我想看到一个"开、低、高、收（open, low, high, close，OHLC）"形态。如果你不知道我在说什么，点一下这个链接。带着这个想法，我们这里有什么？这里有几个漂亮<strong>堆叠的低点（stacked lows）</strong>，还有一根<strong>没有影线（no wick）的蜡烛</strong>，这种我很喜欢做目标。我们看周一，它做了什么？我们放大一点。周一吃掉前日高点、也就是周五的高点，然后收回到区间里。次日，价格朝着我下方的流动性目标移动。那我们降到小时图和 15 分钟图，看看纽约 AM 时段有没有给机会。</p>
+<p>现在我们到了小时图上，可以看到我们这里的周五高点在周一被吃掉了，然后出现激进的向下位移。这是我们之前在日线上提到的流动性目标。看看会发生什么。我们扫了这里的止损单，没能收在其上方，然后出现激进向下位移。让它继续。价格向上进入这个公允价值缺口，然后回落。那我们进入纽约 AM 时段之前的 15 分钟图，看看出现什么。这是我们的小时线公允价值缺口，如果你注意到，随着这根蜡烛收盘，我们这里出现了一个 15 分钟公允价值缺口。所以理想情况下，我希望开盘时价格回踩到这里，然后朝着下方我们的流动性目标移动。</p>
+<p>然后你看，我们的流动性目标被打到了，那就是纽约 AM 时段的这波行情。回到日线图看这波怎么走的。你可以看到周一吃掉前日高点，我们朝着这个低点走了一段，但一旦我们打到我下方的流动性目标，我们做了什么？我们回落进来，收回区间里。所以现在，我们能预期周三、周四，或者直到我们到达这个高点之前，发生什么？我们可以预期向上扩展（expansion up），甚至比预期更多的扩展。</p>
+<p>对于下一个例子，我们看欧元美元（EURUSD）。你可以看到我们这里有卖方流动性，形式是<strong>等低点（equal lows）</strong>。往里看，我们可以标出<strong>前周高点（previous week's high）</strong>，因为那是我们的周三。所以周一、周二、周三、周四、周五作为前一周——那就是高点。进入周一，让它形成。跟我们上一个 NQ 例子类似，我们吃掉买方流动性，收回到区间里。所以据此，我们可以预期次日去够低点，你可以看到我们这里有几个低点，下方也有，但主要专注纽约 AM 时段。所以降到一小时图。我们在周二到了小时图，要标出午夜开盘，让它走出来，看看纽约 AM 时段有没有 setup。</p>
+<p>现在快到纽约 AM 时段了，我降到 15 分钟图。你可以看到我们这里有一个公允价值缺口，这里也有一个公允价值缺口，支撑看空订单流，我们这里还有另一个公允价值缺口。所以理想情况，先回踩到这里，然后再走低。不过那没有发生。所以它就这么离开、走出这根大实体，后来纽约时段大部分在盘整。所以我们看下一天，周二我们确实跌了一段，但纽约时段没有 setup。所以我要看周三是向下的延续。回到一小时图。现在在小时图上，我们看看发生什么。目前，我们有一根大的向下位移蜡烛，现在我们有了一个公允价值缺口，所以我们把它标出来。你可以看到我们回踩到午夜开盘上方，但目前正在尊重这个公允价值缺口。好，随着我们临近纽约 AM 时段，我们跳到 15 分钟图。如果你看这里，当我们超过午夜开盘时，我们向下位移，我们这里有一个公允价值缺口。价格在尊重它。所以从这里，我希望价格朝这个低点移动，那是我们当前的卖方流动性，然后去够我们标出来的<strong>旧日线低点（old daily lows）</strong>。让它走出来，我们得到一波跌破那个低点、回到公允价值缺口、然后继续走低。所以我们回到小时图。你可以看到我们想看这些低点在这里，理想情况下是那张日线图下方的那些等低点。回到日线图，我们得到一个延续，确实吃掉了那些低点。</p>
+<p>对于下一个例子，我们还在欧元美元上，我在看这个订单块。让周一在家休息，因为这是周五。你可以看到我们收出一根<strong>内包线（inside bar）</strong>，没有触及我们的高周期 PD array。周二，我们确实触及了那个 PD array，并拿到一个反应。所以次日，我想寻找向下的延续，理想是冲着这些低点去，不过我们还没打到<strong>前周低点（previous week's low）</strong>。所以我们到了小时图上，我们标出了日开盘（daily open），下方停着卖方流动性，然后下面是我们的日线卖方流动性。让它走出来，看看我们拿到什么。我们这里出现一个相当快速的下跌。然而，随着我们临近纽约时段，我们回到这个区间里，所以现在我们<strong>制造（engineered）了更多卖方流动性</strong>。降到 15 分钟图。这里我们可以看到一个 15 分钟公允价值缺口，里面有一个老高点，那是一个可能的进场点。不过如果我们错过了这个，我们还能在这里找其他进场。看看我们会不会拿到公允价值缺口。没有。不过我们这里确实有一个老高点，它应该被当作阻力用。所以我希望价格在这里受阻，然后再去够这份卖方流动性和下方的卖方流动性。然后你看，我们到达了我们的卖方流动性，回测之前的低点，制造更多流动性，留下高点，然后走。你可以看到在我们打到这个订单块之后，我们吃掉初始的卖方流动性，然后一路位移穿过这些旧低点。</p>
+<p>对于最后一个例子，我们看英镑美元（GBPUSD）。如果你注意到，我们这里做了一根<strong>聪明钱反转（smart money reversal，SMR）</strong>。订单流看涨，我们这里停着一些高点。把这些高点标出来。我们放大日线。因为这是周五，如果我要预期一个看涨周，我想在向上扩展进入这些高点之前，先看到一个"开、低"形态，然后加上周五高点，最后才收出"高、收"。所以让周一开盘，周二下跌，但我们做了什么？我们尊重这个订单块的<strong>平均阈值（mean threshold）</strong>。所以如果我们打算在一周里拿到一个经典的"周二低点"（Tuesday low）的扩展，我想看到周三向周五高点、进入这些旧高点扩展。带着这个想法，我们下一小时图。这是我们的午夜开盘，当我们朝纽约 AM 时段走的时候，我们有什么？我们有一个订单块、或者说一根午夜收盘向下的蜡烛，然后这里有一个公允价值缺口。所以我们把它推向纽约开盘。谢谢。在 15 分钟图上，你可以看到我们这里也有一个 15 分钟公允价值缺口，我会用方框把它标出来，好区分两者。看看这里会发生什么，我们会不会拿到一个反应。目前是一个相当激烈的反应，在回测午夜。如果你注意到，没有任何实体收在午夜下方。现在我们拿到什么？一根激进外移大实体，那根蜡烛收盘，我们这里现在有了一个公允价值缺口。位移出来，我们想让它朝哪里扩展？周五高点，以及那些高点。看看我们拿到什么样的扩展。然后你看，我们吃到周五高点，停在区间里，然后我们跳回日线看这一周怎么收尾的。我们走出更高，在高点制造了更多流动性，好让周五冲更高。我希望你们喜欢这个视频。感谢 MMXM 把模型发在 Twitter 上，希望这给你们中的一些人讲清楚了。如果你们喜欢，请考虑点赞和订阅，祝你今天愉快。再见。</p>
+<p>---</p>
+<h2>四、关键单词解释 + 英文语法整理</h2>
+<h3>4.1 本集单词表</h3>
+<table>
+<tr><th>英文</th><th>中文</th><th>通俗解释</th></tr>
+<tr><td><strong>Next Day Model</strong></td><td>次日模型</td><td>MMXM 的玩法：高周期位被打到的"次日"才进纽约时段</td></tr>
+<tr><td><strong>MMXM</strong></td><td>一个交易者昵称</td><td>在 Twitter 发布这套模型的作者，TTrades 拿来拆解</td></tr>
+<tr><td><strong>Top-down analysis</strong></td><td>自顶向下分析</td><td>先看日线定方向，再降小时图、15分钟图找进场</td></tr>
+<tr><td><strong>Higher time frame (HTF) level</strong></td><td>高周期位</td><td>日线/周线上的关键位，模型的前提是等它被打到</td></tr>
+<tr><td><strong>Draw on liquidity (DOL)</strong></td><td>流动性目标</td><td>价格最终要去扫的那坨流动性</td></tr>
+<tr><td><strong>Fair value gap (FVG)</strong></td><td>公允价值缺口</td><td>三根K线之间的"真空"缺口，常当回踩进场点</td></tr>
+<tr><td><strong>Consequent encroachment (CE)</strong></td><td>后入侵区域</td><td>FVG 内部的中点区域，价格常先回踩到这再走</td></tr>
+<tr><td><strong>Order block (OB)</strong></td><td>订单块</td><td>发动一波行情的最后一根反向K线区域</td></tr>
+<tr><td><strong>Breaker</strong></td><td>破坏块</td><td>被跌破后又反转的订单块/支撑，反手当反向参考</td></tr>
+<tr><td><strong>Midnight open</strong></td><td>午夜开盘</td><td>美东午夜 0 点的开盘价，ICT 里是重要参照/回踩位</td></tr>
+<tr><td><strong>Weekly open / Daily open</strong></td><td>周/日开盘</td><td>周一开盘价、当日开盘价，常是 DOL 或目标</td></tr>
+<tr><td><strong>New York session</strong></td><td>纽约时段</td><td>美东 9:30 开盘的时段，模型只做这个时段</td></tr>
+<tr><td><strong>Skipping Mondays</strong></td><td>跳过周一</td><td>周一是洗盘日，模型规定不做</td></tr>
+<tr><td><strong>Economic calendar</strong></td><td>经济日历</td><td>高影响数据日程，当"路线图"用</td></tr>
+<tr><td><strong>Smart money reversal (SMR)</strong></td><td>聪明钱反转</td><td>一种反转形态（突然扫掉流动性后反打）</td></tr>
+<tr><td><strong>Equal highs / equal lows</strong></td><td>等高/等低点</td><td>两个几乎同价的摆动点，密集流动性</td></tr>
+<tr><td><strong>Stacked lows</strong></td><td>堆叠低点</td><td>连在一起的低点群</td></tr>
+<tr><td><strong>Candle with no wick</strong></td><td>无影线蜡烛</td><td>收在高/低点不留影线的强势K线，作者喜欢做目标</td></tr>
+<tr><td><strong>SMT (at the highs)</strong></td><td>同步背离</td><td>同资产/关联品种在高点不一致，暗示顶部</td></tr>
+<tr><td><strong>Open, low, high, close (OHLC)</strong></td><td>开低高收</td><td>看涨周的理想周线形态</td></tr>
+<tr><td><strong>Tuesday low week</strong></td><td>周二低点周</td><td>经典 ICT 周模式：周初低点在周二</td></tr>
+<tr><td><strong>Mean threshold</strong></td><td>平均阈值</td><td>订单块的中间价区，回踩它是关键确认</td></tr>
+<tr><td><strong>Inside bar</strong></td><td>内包线</td><td>整根K线被前一根包裹的K线</td></tr>
+<tr><td><strong>PD array</strong></td><td>PD 阵列</td><td>高周期价格衍生区（FVG/OB/breaker 等的统称）</td></tr>
+<tr><td><strong>Displacement</strong></td><td>位移</td><td>大实体K线强势推动</td></tr>
+<tr><td><strong>Reaction</strong></td><td>反应</td><td>价格在关键位的回应（反转或承接）</td></tr>
+<tr><td><strong>Wick / body</strong></td><td>影线/实体</td><td>蜡烛的影线部分与实体部分</td></tr>
+<tr><td><strong>Sell side liquidity</strong></td><td>卖方流动性</td><td>低点下方堆积的卖止损单</td></tr>
+<tr><td><strong>Buy side liquidity</strong></td><td>买方流动性</td><td>高点上方堆积的买止损单</td></tr>
+<tr><td><strong>Engineer liquidity</strong></td><td>制造流动性</td><td>价格反复盘整，人为"攒"出更多流动性</td></tr>
+</table>
+<h3>4.2 本集英文语法与表达整理</h3>
+<p>这集是典型的美式交易教学口播，有几个值得学的表达：</p>
+<p><strong>① "我们正要去/我们将"的进行时表将来</strong></p>
+<blockquote>*We are going to go over the MMXM Traders Twitter model.*</blockquote>
+<ul>
+<li><code>be going to + do</code> 表"打算做"，口语预告接下来内容的标准说法；这里叠加 <code>going to go over</code> 有点口语化冗余，但很地道。</li>
+</ul>
+<p><strong>② 否定词 + 比较级/未完成（表"还没"）</strong></p>
+<blockquote>*We have yet to hit previous week's low.*</blockquote>
+<ul>
+<li><code>have yet to + do</code> = "尚未做某事"，比 <code>haven't + done</code> 更书面、更强调"还没到那一步"。交易里高频，表"目标还没打到"。</li>
+</ul>
+<p><strong>③ 条件句表"期望/如果"</strong></p>
+<blockquote>*If I'm expecting a bullish week, I'd want to see an open, low put in before expansion higher.*</blockquote>
+<ul>
+<li><code>If + 现在时, I'd (would) want to see...</code>：条件句 + 虚拟/委婉预期，表"如果我是这种预期，那我希望看到……"，是交易者推演思路的常见句式。</li>
+</ul>
+<p><strong>④ 设问 + 追问（教学推进）</strong></p>
+<blockquote>*What do we have right here? We have some nice lows stacked right there.*</blockquote>
+<ul>
+<li>先设问再回答，配合 <code>right here / right there</code>（"就在这"），带着听众一起看图找关键位，是 TTrades 的教学习惯。</li>
+</ul>
+<p><strong>⑤ 强调"正是/就是"的 <code>this is where/when</code></strong></p>
+<blockquote>*This is where we hit the daily fair value gap.*</blockquote>
+<ul>
+<li><code>This is where + 句子</code>：强调"就是在这里发生某事"，比单纯说 <code>we hit here</code> 更有画面感和指向性。</li>
+</ul>
+<p><strong>⑥ 转折 + 让步：<code>However</code> 引出反转</strong></p>
+<blockquote>*However, that does not occur.*</blockquote>
+<ul>
+<li>单句 <code>However</code> 起头表示"但事与愿违"，口语里高频用来推翻前面预设，体现"计划赶不上变化"。</li>
+</ul>
+<p><strong>⑦ 祈使 + 具体动作序列（指令感）</strong></p>
+<blockquote>*So skipping this, we look at Tuesday.* / *Let's drop down to the 15-minute chart.*</blockquote>
+<ul>
+<li>现在分词作状语（<code>skipping this</code>）+ 祈使（<code>let's drop down</code>），把"跳过周一→看周二→降周期"一气呵成，节奏紧凑。</li>
+</ul>
+<p><strong>⑧ 高频动词短语：reach for / take out / run stops</strong></p>
+<ul>
+<li><code>reach for</code> = 去够/冲向；<code>take out</code> = 吃掉/扫掉；<code>run (the) stops</code> = 扫止损。交易讲解里出现频率极高，要熟。</li>
+</ul>
+<p>---</p>
+<h2>五、实例复盘（本集全部实例，逐例配图）</h2>
+<h3>例 1 — 模型总览：日线 DOL + 周三继续走低</h3>
+<ul>
+<li>日线：下方一个日线 FVG 当 DOL，上方还有一个日线 FVG。</li>
+<li>周一到，跳过。周二触到日线位（上方 FVG），拿到反应。</li>
+<li>预期周三日线延续走低，吃卖方流动性、够 DOL。</li>
+<li>小时图：周二打到日线 FVG 后激进走低；有小时线 breaker，周三回踩进 breaker/FVG 后离开。</li>
+<li>15分钟图：午夜开盘，先冲进小时线 FVG/breaker 再离开；进纽约时段有 15m FVG，价格回踩 CE，交付到周开盘、再到下方 DOL。</li>
+</ul>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex1_daily_fvg_dol.png" alt="ex1_daily_fvg_dol"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex1_daily_fvg_dol</figcaption></figure></p>
+<p><strong>实例配图：日线 DOL 定位</strong>——下方红框是作为流动性目标的日线 FVG，上方还有第二个日线 FVG。周一（标注处）被跳过，周二价格向上触及上方高周期位。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex1_hourly_breaker.png" alt="ex1_hourly_breaker"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex1_hourly_breaker</figcaption></figure></p>
+<p><strong>实例配图：小时线 breaker + FVG 回踩</strong>——周二打到日线 FVG 后激进走低，小时图留下一个 breaker。进入周三时价格回踩进这个 breaker 和小时线 FVG，然后离开，顺势继续向下。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex1_15m_midnight.png" alt="ex1_15m_midnight"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex1_15m_midnight</figcaption></figure></p>
+<p><strong>实例配图：15分钟午夜开盘</strong>——午夜开盘价是这段行情的起点。价格先向上冲进小时线 FVG/breaker（左侧那波上涨），随后离开，方向仍是向下。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex1_15m_fvg.png" alt="ex1_15m_fvg"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex1_15m_fvg</figcaption></figure></p>
+<p><strong>实例配图：15分钟 FVG + CE 回踩 → 交付</strong>——进纽约时段出现一个 15m FVG，价格先回踩到它的 CE（中点）区域，然后向下交付到周开盘，最终到下方 DOL。这就是完整的一整套模型走法。</p>
+<h3>例 2 — 日线订单块 + SMT 顶部识别空头</h3>
+<ul>
+<li>日线订单块为关键位，周一~周四：周四触到并尊重日线位。</li>
+<li>进周五，预期纽约时段找空头 setup。</li>
+<li>小时图关键：<strong>SMT at the highs（高点同步背离）</strong> + 小时线 FVG + 下方卖止损单（= DOL）。</li>
+<li>新闻打上影线，但实体尊重 FVG → 向下位移 → 看空订单块 → 进场 → 奔向下方卖止损。</li>
+</ul>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex2_daily_orderblock.png" alt="ex2_daily_orderblock"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex2_daily_orderblock</figcaption></figure></p>
+<p><strong>实例配图：日线订单块测试</strong>——日线 OB 是关键位。周一~周四，价格上来用这根收盘测试日线位并尊重它，所以周五进纽约时段预期找空头 setup。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex2_hourly_smt.png" alt="ex2_hourly_smt"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex2_hourly_smt</figcaption></figure></p>
+<p><strong>实例配图：SMT + 小时线 FVG + 下方卖止损</strong>——这是本集判断顶部的重要画面：高点处 SMT（同步背离暗示顶），旁边是小时线 FVG，下方停着卖止损单（即 DOL）。新闻打上影线但实体尊重 FVG，随后向下位移，看空订单块处进场。</p>
+<h3>例 3 — NASDAQ：等高目标 + 跳过周一 + OHLC 看涨周</h3>
+<ul>
+<li>日线刚做出一组<strong>等高</strong>，是未来目标；结构看涨，预期本周看涨。</li>
+<li>周五→<strong>跳过周一</strong>。看涨周想看 <strong>open, low, high, close</strong>。</li>
+<li>有<strong>堆叠低点</strong> + 一根<strong>无影线蜡烛</strong>（作者喜欢做目标）。</li>
+<li>周一吃掉前日高点（=周五高点）、收回区间 → 次日朝下方 DOL 移动。</li>
+<li>小时图：周五高点周一套现，随后激进向下位移；扫了止损没能收在上方 → 向下位移 → 回踩 FVG 再回落。</li>
+<li>15分钟图：纽约 AM 前有 15m FVG，期望开盘回踩后朝 DOL 走。<strong>结果 DOL 被打到</strong>，就是纽约 AM 的行情。</li>
+</ul>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex3_nasdaq_equal_highs.png" alt="ex3_nasdaq_equal_highs"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex3_nasdaq_equal_highs</figcaption></figure></p>
+<p><strong>实例配图：日线等高 + 看涨结构</strong>——刚做出一组等高（equal highs），那会是未来目标；整体结构看涨，所以预期本周收涨，采用 OHLC 看涨周框架。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex3_lows_no_wick.png" alt="ex3_lows_no_wick"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex3_lows_no_wick</figcaption></figure></p>
+<p><strong>实例配图：堆叠低点 + 无影线蜡烛</strong>——右侧有漂亮的堆叠低点（stacked lows），作者也注意到一根无影线蜡烛（收在高点不留影线），这类强势K线是他喜欢做目标的地方。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex3_hourly_frihigh.png" alt="ex3_hourly_frihigh"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex3_hourly_frihigh</figcaption></figure></p>
+<p><strong>实例配图：小时图周五高周一被打掉</strong>——周一套现了周五高点，随后出现激进向下位移。扫了下方止损后没能收在其上方，继续向下位移。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex3_15m_fvg.png" alt="ex3_15m_fvg"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex3_15m_fvg</figcaption></figure></p>
+<p><strong>实例配图：15分钟 FVG 待回踩</strong>——纽约 AM 时段前，小时线 FVG 上方出现一个 15m FVG。理想情况是开盘价格回踩到这里，然后朝下方 DOL 走去。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex3_dol_hit.png" alt="ex3_dol_hit"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex3_dol_hit</figcaption></figure></p>
+<p><strong>实例配图：DOL 被打到</strong>——15m 回踩 FVG 后向下交付，最终打到了日线 DOL。这就是纽约 AM 时段的完整一波行情，模型兑现。</p>
+<h3>例 4 — EURUSD：卖方流动性 = 等低点 + 前周高点</h3>
+<ul>
+<li>日线卖方流动性形式是<strong>等低点</strong>；标出<strong>前周高点</strong>（因为那是周三）。</li>
+<li>类似 NQ 例子：周一吃掉买方流动性、收回区间 → 预期次日去够低点。</li>
+<li>主要专注纽约 AM。小时图周二标午夜开盘，等纽约 AM setup。</li>
+<li>15分钟图：两个 FVG 支撑看空订单流，还有个 FVG，期望先回踩再走低——但没发生，直接大实体走低，纽约时段盘整。</li>
+<li>次日周三：小时图大向下位移蜡烛 + 新 FVG；回踩午夜开盘上方但尊重 FVG。15分钟：向上过午夜开盘后向下位移出 FVG，价格尊重；期望去够当前卖方流动性（低点），再够<strong>旧日线低点</strong>。结果跌破那个低点、回踩 FVG、继续走低，最后吃掉日线等低点。</li>
+</ul>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex4_eurusd_daily.png" alt="ex4_eurusd_daily"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex4_eurusd_daily</figcaption></figure></p>
+<p><strong>实例配图：EURUSD 日线卖方流动性 + 前周高点</strong>——右侧是等低点形式的卖方流动性；标注了前周高点（也就是周三）。周一套现买方流动性后收回区间，预期次日去够下方低点。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex4_15m_fvgs.png" alt="ex4_15m_fvgs"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex4_15m_fvgs</figcaption></figure></p>
+<p><strong>实例配图：15分钟多个 FVG 支撑看空</strong>——纽约 AM 前有多个 FVG 支撑看空订单流。理想是先回踩 FVG 再走低，但这次没回踩，直接大实体走低，纽约时段转入盘整。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex4_15m_continuation.png" alt="ex4_15m_continuation"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex4_15m_continuation</figcaption></figure></p>
+<p><strong>实例配图：跌破低点 → 回踩 FVG → 延续走低</strong>——周三向上过午夜开盘后向下位移出 15m FVG，价格尊重它。随后跌破当前卖方流动性（低点），回踩 FVG，继续走低，最终吃掉了日线的等低点。这说明"流动性接力"。</p>
+<h3>例 5 — EURUSD：日线订单块 + 内包线 + 制造流动性</h3>
+<ul>
+<li>还是 EURUSD，看这个订单块。周五 → 让周一休息。周一收<strong>内包线</strong>，没触及 HTF PD array。</li>
+<li>周二触及 PD array 拿到反应 → 次日找延续走低，目标低点，但还没打到前周低点。</li>
+<li>小时图：标日开盘，下方卖方流动性，再下方日线卖方流动性。先快速下跌，但临近纽约回到区间 → <strong>制造了更多卖方流动性</strong>。</li>
+<li>15分钟图：一个 15m FVG 内含老高点（可能进场点）；错过还能找其他。有老高点当阻力，期望价格受阻后再去够两份卖方流动性。结果到达卖方流动性，回测前低、制造更多流动性、留下高点、然后走。</li>
+</ul>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex5_inside_bar.png" alt="ex5_inside_bar"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex5_inside_bar</figcaption></figure></p>
+<p><strong>实例配图：内包线 + 未触 HTF PD array</strong>——周一一根内包线（inside bar），没有触及高周期 PD array，所以让周一休息。周二才触及 PD array 并拿到反应，次日才找延续走低。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex5_15m_entry.png" alt="ex5_15m_entry"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex5_15m_entry</figcaption></figure></p>
+<p><strong>实例配图：15分钟 FVG + 老高点进场参考</strong>——15m FVG 里含一个老高点，是可能进场点；错过还有别的。另一个老高点当阻力，希望价格受阻后再去够下方卖方流动性。最终到达卖方流动性、回测前低、再制造流动性后走掉。</p>
+<h3>例 6 — GBPUSD：聪明钱反转 + 经典周二低点周</h3>
+<ul>
+<li>做一根 <strong>SMR（聪明钱反转）</strong>，订单流看涨，上方停着高点，标出来。</li>
+<li>周五 → 若预期看涨周，想先看 open/low，再向上扩展进高点 + 周五高点，最后 high/close。</li>
+<li>周一开盘、周二下跌，但尊重订单块<strong>平均阈值（mean threshold）</strong>。</li>
+<li>预期周三朝周五高点 + 旧高点扩展（经典"周二低点周"）。</li>
+<li>小时图：午夜开盘 + 订单块/向下收盘蜡烛 + FVG。15分钟图：也有 15m FVG（框起来区分），激进反应回测午夜，无实体收在午夜下方 → 激进外移大实体 → 新 FVG → 位移，目标周五高点。结果吃到周五高点、停在区间。</li>
+</ul>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex6_gbpusd_smr.png" alt="ex6_gbpusd_smr"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex6_gbpusd_smr</figcaption></figure></p>
+<p><strong>实例配图：GBPUSD 聪明钱反转（SMR）</strong>——日线做出一根 SMR，订单流看涨，上方停着高点。预期看涨周（OHLC 框架），标出上方目标。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex6_hourly_midnight.png" alt="ex6_hourly_midnight"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex6_hourly_midnight</figcaption></figure></p>
+<p><strong>实例配图：午夜开盘 + 订单块 + FVG</strong>——小时图午夜开盘，有一个订单块/午夜向下收盘蜡烛，以及一个 FVG。这是纽约 AM 进场前的关键参照结构。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex6_take_frihigh.png" alt="ex6_take_frihigh"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex6_take_frihigh</figcaption></figure></p>
+<p><strong>实例配图：吃周五高点 + 停在区间</strong>——15分钟回测午夜、无实体收其下方后，出现激进外移大实体 + 新 FVG，位移奔向周五高点。最终吃到周五高点并停在区间里，兑现"周二低点周"的扩展预期。</p>
+<p>---</p>
+<h2>六、概念详解配图（图跟内容走，逐张细读）</h2>
+<blockquote>所有图片均从视频原画面按对应时刻截取（1280×720）。这张图集完整展示了 MMXM 次日模型的整套流程。</blockquote>
+<h3>6.1 模型定义（这张是"总纲"）</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/model_definition.png" alt="model_definition"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">model_definition</figcaption></figure></p>
+<p><strong>图：MMXM 模型定义</strong>——这就是视频开头展示的 MMXM 帖子，也是整集的"总纲"。上面清楚写着模型五要素：跳过周一、只做纽约时段、15分钟图、经济日历当路线图、在高周期位被打到的次日交易。先记住它，后面所有例子都是它的展开。</p>
+<h3>6.2 例 1 拆解（日线定 DOL → 小时/15分钟进场）</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex1_daily_fvg_dol.png" alt="ex1_daily_fvg_dol"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex1_daily_fvg_dol</figcaption></figure></p>
+<p><strong>图：日线 DOL（下方 FVG）+ 上方 FVG</strong>——图上有两个日线 FVG：下方红框那个是流动性目标（DOL），上方是另一个被周二触及的高周期位。周一被跳过，周二向上打到上方 FVG 后拿到反应，为周三日线延续走低做铺垫。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex1_hourly_breaker.png" alt="ex1_hourly_breaker"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex1_hourly_breaker</figcaption></figure></p>
+<p><strong>图：小时线 breaker + FVG 回踩离开</strong>——周二在日线 FVG 处拿到反应后激进走低，小时图留下 breaker。进入周三时价格回踩进这个 breaker + 小时线 FVG，然后离开继续向下。<strong>要点：breaker 被回踩后是延续参考，不是反转。</strong></p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex1_15m_midnight.png" alt="ex1_15m_midnight"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex1_15m_midnight</figcaption></figure></p>
+<p><strong>图：15分钟午夜开盘 + 冲 FVG</strong>——午夜开盘是这根 15m 结构的起点。价格先向上冲进小时线 FVG/breaker（左侧上涨波），随后向下离开，方向仍是向下交付。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex1_15m_fvg.png" alt="ex1_15m_fvg"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex1_15m_fvg</figcaption></figure></p>
+<p><strong>图：15分钟 FVG + CE 回踩 → 交付周开盘/ DOL</strong>——进纽约时段出现 15m FVG，价格先回踩到它的 CE（中点）再交付到周开盘、再到下方 DOL。这是模型最完整的一遍走法：<strong>HTF 位被打到 → 次日纽约 → 15m FVG 回踩 → 交付 DOL</strong>。</p>
+<h3>6.3 例 2（SMT 顶 + 空头进场）</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex2_daily_orderblock.png" alt="ex2_daily_orderblock"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex2_daily_orderblock</figcaption></figure></p>
+<p><strong>图：日线订单块测试</strong>——日线 OB 是关键位。周一到周四，价格上来测试并尊重它，所以进周五预期纽约时段找空头。<strong>尊重（respect）是关键词：价格碰到不破，就说明它有效。</strong></p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex2_hourly_smt.png" alt="ex2_hourly_smt"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex2_hourly_smt</figcaption></figure></p>
+<p><strong>图：SMT + 小时线 FVG + 下方卖止损</strong>——本集判断顶部的核心图。高点处 SMT（同步背离暗示顶部）、旁边小时线 FVG、下方卖止损单（= DOL）。新闻打上影线但实体尊重 FVG → 向下位移 → 看空订单块进场 → 奔向卖止损。<strong>影线被拒 + 实体尊重 = 空头进场信号。</strong></p>
+<h3>6.4 例 3（NASDAQ：看涨周跳过周一）</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex3_nasdaq_equal_highs.png" alt="ex3_nasdaq_equal_highs"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex3_nasdaq_equal_highs</figcaption></figure></p>
+<p><strong>图：日线等高 + 看涨结构</strong>——刚做出等高（未来目标），结构看涨，预期本周收涨。<strong>等高的意义：密集买方流动性，是机构想去扫的目标。</strong></p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex3_lows_no_wick.png" alt="ex3_lows_no_wick"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex3_lows_no_wick</figcaption></figure></p>
+<p><strong>图：堆叠低点 + 无影线蜡烛</strong>——右侧堆叠低点 + 一根无影线蜡烛（强势收在高点）。作者喜欢做这种目标——<strong>无影线说明多方掌控，是强势信号。</strong></p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex3_hourly_frihigh.png" alt="ex3_hourly_frihigh"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex3_hourly_frihigh</figcaption></figure></p>
+<p><strong>图：小时图周五高周一被打掉</strong>——周一套现周五高点后激进向下位移。扫了止损没能收在上方，继续走低。<strong>周一的行为（套现前日高点 + 收回区间）正是跳过周一的原因。</strong></p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex3_15m_fvg.png" alt="ex3_15m_fvg"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex3_15m_fvg</figcaption></figure></p>
+<p><strong>图：15分钟 FVG 待回踩</strong>——纽约 AM 前，小时线 FVG 上方有个 15m FVG。期望开盘回踩这里再朝 DOL 走。<strong>FVG 是"上车点"，DOL 是"下车点"。</strong></p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex3_dol_hit.png" alt="ex3_dol_hit"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex3_dol_hit</figcaption></figure></p>
+<p><strong>图：DOL 被打到</strong>——15m 回踩 FVG 后向下交付，最终打到日线 DOL。<strong>目标兑现 = 行情完成，别贪，收工等下一集。</strong></p>
+<h3>6.5 例 4（EURUSD：流动性接力）</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex4_eurusd_daily.png" alt="ex4_eurusd_daily"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex4_eurusd_daily</figcaption></figure></p>
+<p><strong>图：EURUSD 日线卖方流动性 + 前周高点</strong>——等低点形式卖方流动性 + 前周高点标注。周一套现买方流动性收回区间 → 次日够低点。<strong>等低点 = 双份卖方流动性，更值得扫。</strong></p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex4_15m_fvgs.png" alt="ex4_15m_fvgs"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex4_15m_fvgs</figcaption></figure></p>
+<p><strong>图：15分钟多 FVG 支撑看空</strong>——多个 FVG 支撑看空订单流。理想先回踩再走低，但这次没回踩直接走低，纽约时段盘整。<strong>计划赶不上变化——没回踩就放弃，等次日。</strong></p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex4_15m_continuation.png" alt="ex4_15m_continuation"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex4_15m_continuation</figcaption></figure></p>
+<p><strong>图：跌破低点 → 回踩 FVG → 延续</strong>——周三过午夜开盘后向下位移出 15m FVG，价格尊重；跌破当前卖方流动性，回踩 FVG，继续走低，最终吃日线等低点。<strong>流动性是接力的：一个被扫，换下一个。</strong></p>
+<h3>6.6 例 5（EURUSD：内包线 + 制造流动性）</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex5_inside_bar.png" alt="ex5_inside_bar"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex5_inside_bar</figcaption></figure></p>
+<p><strong>图：内包线 + 未触 HTF PD array</strong>——周一内包线，没触及 PD array，让周一休息。周二才触及 PD array 拿反应，次日找延续。<strong>未触及 → 当天不动作，等打到位再说。</strong></p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex5_15m_entry.png" alt="ex5_15m_entry"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex5_15m_entry</figcaption></figure></p>
+<p><strong>图：15分钟 FVG + 老高点进场参考</strong>——15m FVG 内含老高点（可能进场），老高点当阻力，受阻后再去够卖方流动性。<strong>结果到达卖方流动性、回测前低、再制造流动性后走掉。</strong>制造流动性 = 价格反复盘整把新止损单"养肥"。</p>
+<h3>6.7 例 6（GBPUSD：SMR + 周二低点周）</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex6_gbpusd_smr.png" alt="ex6_gbpusd_smr"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex6_gbpusd_smr</figcaption></figure></p>
+<p><strong>图：GBPUSD 聪明钱反转（SMR）</strong>——日线 SMR 反转，订单流看涨，上方高点为目标。预期看涨周（OHLC），标出上方目标。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex6_hourly_midnight.png" alt="ex6_hourly_midnight"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex6_hourly_midnight</figcaption></figure></p>
+<p><strong>图：午夜开盘 + 订单块 + FVG</strong>——小时图午夜开盘、订单块/向下收盘蜡烛、FVG。这是纽约 AM 进场前的结构参照。<strong>午夜开盘是关键回测位：不破它，多头就在。</strong></p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/06/ex6_take_frihigh.png" alt="ex6_take_frihigh"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">ex6_take_frihigh</figcaption></figure></p>
+<p><strong>图：吃周五高点 + 停在区间</strong>——15分钟回测午夜、无实体收其下方 → 激进外移大实体 + 新 FVG → 位移奔周五高点 → 吃到并停在区间。<strong>兑现"周二低点周"扩展预期，一周收成看涨。</strong></p>
+<p>---</p>
+<h2>七、给 HYPE 实战的落地要点（结合你的 HYPE-USDT 15m 玩法）</h2>
+<p>你主要盯 HYPE-USDT 15m，这套模型可以直接内化成你的节奏表：</p>
+<p>1. <strong>先定"模型前提"——别天天都有机会</strong>：先在 15m/1h 上找到你预期的高周期位（前日/前周高低、1h FVG/订单块）。<strong>价格没触到它之前，今天就"跳过"</strong>，不硬找机会。这能大幅砍掉你冲动开单的次数。</p>
+<p>2. <strong>"跳过周一"用在你的市场</strong>：加密 24h，没有真正的周一，但<strong>换日点/周末后开盘的第一段</strong>常是"套现前日高低 + 收回区间"的洗盘段。识别出这种"洗盘日"就别进场，等它把流动性偷完。</p>
+<p>3. <strong>只做你的"纽约时段"</strong>：对你就是<strong>北京时间 19:00-22:00（美东开盘）+ 可能的凌晨段</strong>。把看盘窗口固定死，窗口外不看、不手痒。错过开盘那一波，就等下一集，别追。</p>
+<p>4. <strong>用经济日历当路线图</strong>：先看当天有没有 HYPE 相关或大盘（BTC/ETH）高影响数据（CPI、FOMC、以太坊ETF 等）。有大行情日，模型里的"反应"会更暴力——把这类日子标出来优先盯。</p>
+<p>5. <strong>DOL 先行，FVG 上车</strong>：先在 1h/日线定好 DOL（下方等低点/前低/前日低），再看 15m 有没有 FVG/订单块。<strong>15m FVG 或 CE 回踩 = 你的入场；DOL = 你的目标。</strong> 一步都不能少。</p>
+<p>6. <strong>SMT / 无影线蜡烛 = 强势佐证</strong>：看到 HYPE 与 BTC 在同一个高点"不共振"（SMT），或出现收在高点不留影线的强K线，都是多头掌控的信号——顺势做，别逆它。</p>
+<p>7. <strong>流动性接力 + 制造流动性</strong>：一个 DOL 被扫，马上找下一个还没吃的位；价格在区间反复盘整时，别急着追，那是在"养"新流动性，等它被扫才动手。</p>
+<p>8. <strong>尊重位（respect）胜过预测</strong>：价格碰到 15m FVG/OB 收出实体尊重、或午夜/日开盘不破——这比任何指标都靠谱。<strong>被尊重的位 = 你的进场依据；破掉 = 立刻撤。</strong> 把每条线都写成"碰位后的预案"，而不是"预测位"。</p>
+<blockquote>建议：给 HYPE 设一张"模型检查清单"：①今天该不该做（跳过日？）②高周期位打到没？③现在是不是我的纽约窗口？④DOL 定了没？⑤15m 有没有 FVG/OB 回踩？——五问全过才开单，五问缺一就观望。这会救下你绝大多数冲动单。</blockquote>
+<p style="color:var(--muted);margin-top:40px;border-top:1px solid var(--line);padding-top:14px;font-size:.85em">
+ICT Concepts 学习合集 · 每集从视频字幕整理 + 图解 · 持续更新</p>
+</body></html>
