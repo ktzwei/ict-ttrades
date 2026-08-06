@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>内部与外部流动性 (Daily Bias) | ICT-TTRades</title>
+<style>
+:root{--bg:#0f1115;--fg:#e6e8eb;--muted:#9aa3af;--accent:#4ade80;--accent2:#60a5fa;
+--card:#171a21;--line:#2a2f3a;}
+*{box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+background:var(--bg);color:var(--fg);max-width:860px;margin:0 auto;padding:40px 22px;line-height:1.8;font-size:16px}
+h1{font-size:1.8em;border-bottom:3px solid var(--accent);padding-bottom:12px;line-height:1.3}
+h2{font-size:1.35em;margin-top:44px;color:var(--accent);border-left:4px solid var(--accent);padding-left:12px}
+h3{font-size:1.1em;margin-top:28px;color:var(--accent2)}
+a{color:var(--accent2)}
+table{border-collapse:collapse;width:100%;margin:18px 0}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;font-size:.95em}
+th{background:var(--card);color:var(--accent)}
+tr:nth-child(even){background:var(--card)}
+blockquote{border-left:4px solid var(--accent2);margin:16px 0;padding:10px 18px;background:var(--card);color:var(--muted);border-radius:0 8px 8px 0}
+code{background:#232837;padding:2px 6px;border-radius:4px;font-size:.9em}
+em{color:var(--muted)}
+img{max-width:100%;border-radius:10px;border:1px solid var(--line);margin:10px 0;display:block}
+.meta{color:var(--muted);font-size:.9em;margin-bottom:24px}
+.back{display:inline-block;margin-bottom:20px;color:var(--accent);text-decoration:none;font-size:.95em}
+img::after{content:attr(alt);display:block;color:var(--muted);font-size:.85em;text-align:center}
+</style>
+</head><body>
+<p><a class="back" href="../index.html">← 返回合集目录</a></p>
+<h1>Internal & External Range Liquidity (Daily Bias) — 中英对照学习笔记</h1>
+<blockquote>来源：TTrades — *Internal & External Liquidity (Daily Bias) - ICT Concepts*（12:17）</blockquote>
+<blockquote>概念定位：市场只做两件事——要么去扫老高低点（外部流动性），要么去回补公允价值缺口（内部流动性）。理解这二者的来回切换，就是理解 Daily Bias 的根本。这一集教你：内部/外部流动性的定义、二者如何交替、自上而下（top-down）的应用框架，以及在任意时间框架上都通用的实战方法。</blockquote>
+<p>---</p>
+<h2>一、核心思想（先看这个）</h2>
+<p>作者一开场就用 PDF 给出精准定义：</p>
+<blockquote><strong>内部范围流动性（Internal Range Liquidity）= 公允价值缺口（Fair Value Gap，FVG）</strong></blockquote>
+<blockquote><strong>外部范围流动性（External Range Liquidity）= 摆动高点或摆动低点，以买方流动性或卖方流动性的形式存在</strong></blockquote>
+<p>核心逻辑链：</p>
+<p>1. <strong>市场只做两件事</strong>：要么去够老高点或老低点（追求外部流动性），要么去回补公允价值缺口（追求内部流动性）。</p>
+<p>2. <strong>二者交替运行</strong>：吃掉外部流动性（扫了摆动高/低点）之后 → 价格会去寻求内部流动性（回补 FVG）；到达内部流动性之后 → 价格会去够老高或老低（外部流动性）。</p>
+<p>3. <strong>这就是 Daily Bias 的来源</strong>：在更高时间框架上理解内部→外部→内部的来回节奏，你就能拿到整周/整天的方向性偏差。</p>
+<p>4. <strong>自上而下（Top-Down）</strong>：高层级（如周线/日线/小时线）定 bias → 中层（如 5 分钟）找 intermediate term 结构 → 低层（如 1 分钟）找入场。</p>
+<blockquote><strong>一句话记住</strong>：外部流动性 = 摆动高低点（扫止损的地方）；内部流动性 = FVG（回补的地方）。价格在这两者之间来回跳，你的 bias 就是预测下一个目标是哪一个。</blockquote>
+<p>---</p>
+<h2>二、英文原意整理（完整版，一字不省）</h2>
+<p>*How's it going, everyone. This video is going to be over the relationship between internal and external range liquidity. We'll first hop into the PDF before hopping into TradingView for some examples.*</p>
+<p>*Now, before we begin, I just want to give a shout out to the MMXM Trader for his teachings. If you want to find his YouTube or Twitter, I will link them in the description below.*</p>
+<p>*First thing we are going to do is define internal and external range liquidity. Internal range liquidity is just a fair value gap. External range liquidity is a swing high or a swing low, in the form of buy side or sell side liquidity. So, putting those two together: what is the relationship between them?*</p>
+<p>*Now, the market only does two things. It either reaches for old highs or old lows, or seeks to rebalance a fair value gap. So, understanding this: how do they work together?*</p>
+<p>*Well, after taking external range liquidity, price will seek internal range liquidity. After reaching internal range liquidity, price will reach for an old high or old low — or external range liquidity. So, after reaching this external liquidity here, where can we anticipate price reaching for? This fair value gap in here. Now, after price reaches into this fair value gap here, where can we anticipate it to go? External range liquidity — so, down here. So you can see: price moves from external range liquidity, to internal range liquidity, back to external range liquidity.*</p>
+<p>*So let's hop into the charts and go over some examples of this.*</p>
+<p>*Here we are on the S&P futures weekly chart for our first example. You can see we failed to displace below this old low — or a swing low — right here. Now, if we are going to retrace, where can we likely see price reaching for? This fair value gap here — or moving from external to internal. So let's see what happens.*</p>
+<p>*So here we reach into internal. From here, if we're going to respect this fair value gap, where are we likely to reach for? External liquidity. If we aren't going to respect this, then we reach for this old high. And there we go — we reach for external. Now, we don't have internal yet — we don't have a fair value gap formed — so let's see what happens on this next candle.*</p>
+<p>*So now we do have internal liquidity in the form of a fair value gap. So now I'd like to see price draw back into this area here. And if you've seen my daily bias video: we failed to displace below the previous bar and close back in. So then I'd be looking for the next candle to reach higher.*</p>
+<p>*So now we reach into the internal liquidity. If we continue to respect this and we're going to go lower, where are we likely to reach for? External liquidity.*</p>
+<p>*Now we reach this external liquidity. Do we have a fair value gap? No, not yet. Okay, now we do have a fair value gap. And if we zoom out a little, we just took this low over here. So let's see what happens. We could move from external to internal — and you can see we displace over this fair value gap, creating an inversion. So then my bias is up. And so I'd like to see up to this old high, and I'd ideally like to see a retracement down before reaching for that. You can see we do not get a retracement — now, it's not always going to be perfect, as you notice here, as we do not get a retracement and we just continue higher. But understanding the relationship between internal and external liquidity can provide a great way to find a bias, or a narrative.*</p>
+<p>*For example, this is a weekly chart. And so, understanding the relationship between internal and external liquidity on a weekly chart can give you directional bias for that whole entire week. So let's hop into some top-down examples and how to utilize this on the higher time frames, and then finding an entry.*</p>
+<p>*For our first top-down example, here we are going to be taking a look at gold on the 60-minute chart. So, if you notice here, we have a fair value gap which price is currently respecting. And if we're going to continue lower, where is price likely to reach for? This old low — or moving from internal range liquidity to external range liquidity on the hourly chart. So, with this providing our bias, we will drop down to the lower time frames — in this case, the 5-minute and the 1-minute — to look for short setups to this old low.*</p>
+<p>*So here we are on the 5-minute chart. You can see we have this fair value gap that we run into, and we're looking for short setups to this old low. We will wait for the start of my session. So here we enter the start of my session — so I will be looking for short setups.*</p>
+<p>*So here, price displaces down, and I could be looking to enter this fair value gap here. However, if I'm looking for a confirmation entry, I will look for a high to be put in in this fair value gap — price to respect it — and then go down to a lower time frame. So here you can see we respect this fair value gap, so I will drop down to the 1-minute chart.*</p>
+<p>*So here we are on the 1-minute chart. You can see we put in a high in the 5-minute fair value gap here, and then displaced lower. Looking at the last up-close candle here — when price took this liquidity, my eyes are on this order block entry right here. So I would be looking for a short setup here, my stop on this high, and then I would be targeting those lows from the hourly chart. So let's see how this plays out.*</p>
+<p>*So there we go — 3.23 R. And you can see how we used internal range liquidity to external range liquidity on the hourly chart for our bias. We then used the 5-minute chart to find an intermediate term high, and then used the 1-minute chart for an entry.*</p>
+<p>*So here we are on GBP/JPY. And if you notice, we have an old high that was just taken here. Now, if we are going to move from external range liquidity, where is our internal range liquidity? Right here — we have a fair value gap. Now, thinking ahead a little: if we reach into internal range liquidity and continue the trend up, where is our new external range liquidity? Right here. So we'll go ahead and mark that out as well.*</p>
+<p>*So let's drop down to the 4-hour chart and see what happens. So here we are on the 4-hour chart. You can see this old high that we have taken out. I've marked out our new external range liquidity, and then we have internal range liquidity on the weekly time frame here. Now, if you notice, these are old lows on the 4-hour, but that is what forms the fair value gap on the weekly.*</p>
+<p>*So you can see we got below this old high with displacement. We are currently retracing into a fair value gap. So I'd like to see price go lower and run these lows. So there we get displacement down, we get a retracement into a fair value gap — so I'd want to see another leg down. And there we go — price reaches into internal range liquidity.*</p>
+<p>*Now, if we're going to go from internal to external, where do our eyes go? Up to external range liquidity — up here. So going from a sell model to a buy model. So what I want to look for first is when price changes the state of delivery, or shifts structure, which would be over this high.*</p>
+<p>*So you can see we changed the state of delivery. So now my eyes are looking up here, and I will eye entries in this price leg up to this old high. Now, if I was looking for a swing position, I'd want to see if price was going to retest here to get long, and target this old high. You can see it looks like it would leave me, as price just respected a new fair value gap here and is continuing higher. So let's see if we can find an entry.*</p>
+<p>*So we just have a new fair value gap here. And let's go ahead and zoom in. So if you notice, we now have a fair value gap here on the 4-hour. So this is internal range liquidity on the 4-hour. So if I'm looking for external range liquidity on the 4-hour, I will be looking for here.*</p>
+<p>*So now that price enters internal range liquidity, I can anticipate it to move where? External range liquidity. So let's drop down to a lower time frame to look at this move right here, and then see if it reaches for this old high.*</p>
+<p>*So dropping down to the 15-minute chart, you can see we are consolidating right on that fair value gap. Here we get a sweep below, and then we change the state of delivery. So I would be looking for this order block entry right here — my stop on this low which was swept — and then looking for a target on this external range liquidity on the 4-hour. If I want to leave runners, to this old high — or the weekly external range liquidity.*</p>
+<p>*So let's zoom back in and see what happens. So there we get tagged in. So now we get an aggressive move higher — that target is hit. So let's see if price reaches for this old high on the weekly chart.*</p>
+<p>*And there we go. So zooming back out to the 4-hour chart, you can see how this was a market maker buy model within this larger time frame market maker buy model. And both of these were framed using internal to external range liquidity.*</p>
+<p>*So here we are on the weekly chart just to review: we went from external range liquidity, to internal range liquidity, and then from internal range liquidity to external range liquidity. From there, we used the 4-hour chart — and you can see how we went from a sell model to a buy model. Then we used the 4-hour internal to external to frame a lower time frame market maker buy model.*</p>
+<p>*So the last thing I want to talk about is: this can be used on any time frame. So for example, here we are on NQ on the 5-minute chart, and open just created this range here. So let's see what happens when one side gets taken.*</p>
+<p>*So you can see here we get an aggressive move out and then back into the range. If we're going to retrace, we will go from external to where? Internal. Let's see. So here we went from internal — now if we're going to continue higher, where should we go? External.*</p>
+<p>*Now that we took external, where can we anticipate price to move to? Internal. See, gets a move to internal, hangs out here. If price is going to continue up — although it's not as clean — want to see it make a new high. You can see here we made a new high, so we've taken external. There are no fair value gaps here, but where do we have a fair value gap? Right here. So that would be internal. So now that we've reached into internal, respected it, where can we reach? External.*</p>
+<p>*So now that we've reached external, we don't have any fair value gaps. See what happens. Okay, we've just taken external once again. Let's see if we create a fair value gap. We do. So now we have internal. So price is going to go from external to internal. Then where would it want to go? External again. So there we go — internal to external.*</p>
+<p>*And I hope you can see how this works out. I hope you found this video insightful. If you did, please consider liking and subscribing. If you have any questions, feel free to leave them in the comments below, and I'll see you guys next week.*</p>
+<p>---</p>
+<h2>三、中文翻译（完整对应）</h2>
+<p>大家好。这期视频讲的是<strong>内部范围流动性和外部范围流动性之间的关系</strong>。我们先看 PDF，再进 TradingView 看实际例子。</p>
+<p>开始之前，我要感谢 MMXM Trader 的教学。如果你想关注他的 YouTube 或 Twitter，我会把链接放在下方描述里。</p>
+<p>首先，我们来定义内部和外部范围流动性。<strong>内部范围流动性就是一个公允价值缺口（FVG）。外部范围流动性就是一个摆动高点或摆动低点，以买方流动性或卖方流动性的形式存在</strong>。那么把这两个放在一起——它们之间是什么关系？</p>
+<p>现在，<strong>市场只做两件事</strong>：它要么去够老高点或老低点，要么去回补一个公允价值缺口。理解了这一点——它们是怎么协同工作的？</p>
+<p>在吃掉外部范围流动性之后，价格会去寻求内部范围流动性。到达内部范围流动性之后，价格会去够老高点或老低点——也就是外部范围流动性。所以，在到达这里的外部流动性之后，我们可以预期价格去哪里？去够这里的这个公允价值缺口。那价格进到这个公允价值缺口之后，我们可以预期它去哪里？去外部范围流动性——也就是往下。所以你看到：价格从外部范围流动性 → 内部范围流动性 → 再回到外部范围流动性。</p>
+<p>下面我们进图表看几个例子。</p>
+<p><strong>例1：标普期货周线图</strong>。可以看到我们没能在这个老低点（摆动低点）下方做出位移。如果价格要回撤，我们很可能看到价格去哪里？去这个公允价值缺口——也就是从外部到内部。我们看看会发生什么。</p>
+<p>价格到达内部流动性。从这里开始，如果价格要尊重这个 FVG，我们很可能会看到它去哪里？去外部流动性。如果不尊重，那价格就会去这个老高点。走了——果然去了外部。现在还没有内部流动性，还没有形成 FVG，所以看看下一根 K 线会怎样。</p>
+<p>现在我们有内部流动性了——出现了一个 FVG。现在我希望看到价格回到这个区域。如果你看过我的 daily bias 视频：价格没能收在前一根 K 线下方、反而收回来了——那么我就会看向上走。</p>
+<p>现在价格进到内部流动性。如果继续尊重并向下走，我们会看到价格去哪里？去外部流动性。</p>
+<p>现在价格到达这个外部流动性。有 FVG 吗？还没。好了，现在有了。往外拉一点看，我们刚吃掉这个低点。看看会怎样——我们可以从外部走向内部，你可以看到价格以位移的方式穿过这个 FVG，<strong>造成了一个反转 FVG（inversion）</strong>。所以我的 bias 变成看多。因此我希望看到价格去够这个老高点，最好在上冲前先来一段回撤。你看，这里没有回撤——不是每次都那么完美的，这里没有回撤，价格直接继续走高。但理解内部和外部流动性之间的关系，是找到 bias（方向性偏差）或叙事（narrative）的极好方法。</p>
+<p>比如，这是一张<strong>周线图</strong>。在周线图上理解内部与外部流动性的关系，就能给你<strong>整整一周的方向性 bias</strong>。所以我们来看一些自上而下（top-down）的例子，看看如何在高时间框架上利用这一点，再找到入场。</p>
+<p><strong>自上而下例1：黄金 60 分钟图</strong>。这里有一个 FVG，价格正在尊重它。如果价格要继续向下走，它很可能去够哪里？这个老低点——也就是在小时图上从内部范围流动性走向外部范围流动性。有了这个 bias 之后，我们就降到更低时间框架——在这个例子中是 5 分钟和 1 分钟——去找空头 setup，目标是那个老低点。</p>
+<p>来到 5 分钟图。你能看到这个 FVG，价格冲进它然后回撤，我们要找去老低点的空头 setup。我们等到我的交易时段开始。进入我的时段——开始找空头 setup。</p>
+<p>价格向下位移，我可以考虑在这个 FVG 入场。但如果我要找确认入场（confirmation entry），我会等在这个 FVG 里出现一个高点、价格尊重该 FVG，然后降到更低时间框架去。这里价格尊重了这个 FVG，所以降到 1 分钟图。</p>
+<p>来到 1 分钟图。可以看到我们在 5 分钟 FVG 里打出了一个高点，然后向下位移。看这根最后向上的收盘 K 线——当价格扫掉这个流动性时，<strong>我的眼睛盯着这个 order block 入场区</strong>。我会在这里找空头 setup，止损放在这个高点上，目标就是小时图上的那些低点。来看看怎么走的。</p>
+<p>好了——<strong>3.23R</strong>。你可以看到我们怎么用的：小时图上的内部→外部流动性给 bias，5 分钟图找 intermediate term 高点（中期高点），1 分钟图找入场。</p>
+<p><strong>例2：英镑/日元（GBP/JPY）</strong>。注意到这里有一个老高点刚被吃掉。如果我们要从外部范围流动性出发，内部流动性在哪？就在这里——有一个 FVG。再往前想一想：如果价格到达内部流动性后继续向上趋势，新的外部范围流动性在哪？就在这里。所以我们把它也标出来。</p>
+<p>降到 4 小时图看看。这里是被吃掉的老高点。我已经标出了新的外部范围流动性，还有周线图上的内部范围流动性。注意，这些在 4 小时上是老低点，但它们正是构成周线 FVG 的边界。</p>
+<p>可以看到价格以位移方式跌到老高点下方，目前正在回撤进一个 FVG。所以我希望价格继续向下、去扫这些低点。于是出现向下位移、回撤进 FVG——所以我希望再来一段下跌。好了——价格到达内部范围流动性。</p>
+<p>现在，<strong>如果要从内部走向外部，我们的目光往哪看？往上看——外部范围流动性</strong>。也就是说从一个卖模型（sell model）切换到一个买模型（buy model）。我要先等价格<strong>改变 delivery 状态</strong>，或者说<strong>换结构（shift structure）</strong>，也就是需要突破这个高点。</p>
+<p>你看，状态改变了。所以我现在目光在上方，在这个向上推进段里找入场，目标就是这个老高点。如果我做的是 swing 单，我会等价格回测这里做多、目标老高点。你看，好像要把我甩下了——价格尊重了一个新的 4 小时 FVG 继续走高。我们看看能不能找到入场。</p>
+<p>这里出现了一个新的 FVG。放大看——现在 4 小时上有了 FVG，所以这是 4 小时上的内部范围流动性。那 4 小时的外部范围流动性在哪？我会看这里。</p>
+<p>现在价格进入内部范围流动性，我可以预期它去哪？外部范围流动性。所以降到更低的 time frame 来看这一段走势，看是否能到达这个老高点。</p>
+<p>降到 <strong>15 分钟图</strong>。你可以看到价格正在那个 FVG 上整理。这里出现一个<strong>向下的 sweep（扫低点）</strong>，然后<strong>改变 delivery 状态</strong>。所以我会看这个 order block 入场区——止损放在这个被扫掉的低点上——目标则是 4 小时上的外部范围流动性。如果我要留仓位跑利润，目标就是这个老高点，也就是周线上的外部流动性。</p>
+<p>放大看看走势。好了——<strong>进场触发（tagged in）</strong>。一波强势拉升，那个目标被打到了。继续看能不能打到周线图上的老高点。</p>
+<p>到了。拉回 4 小时图看：这是一个<strong>做市商买模型（market maker buy model）</strong>，而且它嵌在一个更大的时间框架做市商买模型里面。<strong>这两个模型都是用内部→外部范围流动性来框定的</strong>。</p>
+<p>回到周线图总结一下：我们从外部范围流动性 → 内部范围流动性 → 再从内部 → 外部。然后我们用 4 小时图，看到它如何从一个 sell model 转成 buy model。接下来我们用 4 小时的内部→外部来框定一个更低时间框架的做市商买模型。</p>
+<p>最后要说的是：<strong>这套东西可以用于任何时间框架</strong>。比如这里是 NQ 的 5 分钟图。开盘刚做出这个区间。看某一边被吃掉之后会怎样。</p>
+<p>可以看到一波强势冲出，然后回到区间内。如果我们要回撤，从外部会去哪里？内部。看看。好，从内部出发——如果要继续向上，应该去哪？外部。</p>
+<p>现在吃掉外部之后，可以预期价格去哪？内部。看——去了内部，在那停留。如果要继续向上走——虽然不那么干净——希望看到创新高。你看，创了新高，所以吃掉了外部。这里没有 FVG，但哪有 FVG？就在这里。所以那就是内部。现在到达内部、尊重了它，要去哪？外部。</p>
+<p>现在到达外部，没有 FVG。看看会怎样。好，又吃掉一个外部。看看会不会形成 FVG。形成了。现在有了内部。所以价格要从外部去内部。然后想去哪？还是外部。好了——内部到外部。</p>
+<p>希望你能看到这套逻辑是怎么走的。希望你觉得这期视频有启发。如果你觉得有用，请点赞订阅。有问题可以在评论里留言，下周见。</p>
+<p>---</p>
+<h2>四、关键单词解释 + 英文语法整理</h2>
+<h3>4.1 本集单词表</h3>
+<table>
+<tr><th>英文</th><th>中文</th><th>通俗解释</th></tr>
+<tr><td><strong>Internal Range Liquidity</strong></td><td>内部范围流动性</td><td>就是公允价值缺口（FVG），价格要来"回补"的地方</td></tr>
+<tr><td><strong>External Range Liquidity</strong></td><td>外部范围流动性</td><td>摆动高/低点，即买方/卖方流动性，价格来"扫"的地方</td></tr>
+<tr><td><strong>Fair Value Gap (FVG)</strong></td><td>公允价值缺口</td><td>三根K线中间的"真空"，即内部流动性</td></tr>
+<tr><td><strong>Swing High</strong></td><td>摆动高点</td><td>左右各有更低高点的波峰</td></tr>
+<tr><td><strong>Swing Low</strong></td><td>摆动低点</td><td>左右各有更高低点的波谷</td></tr>
+<tr><td><strong>Buy Side Liquidity</strong></td><td>买方流动性</td><td>摆动高点上方的买止损单（多头被扫）</td></tr>
+<tr><td><strong>Sell Side Liquidity</strong></td><td>卖方流动性</td><td>摆动低点下方的卖止损单（空头被扫）</td></tr>
+<tr><td><strong>Old High / Old Low</strong></td><td>老高点 / 老低点</td><td>历史遗留的、还未被扫的摆动点</td></tr>
+<tr><td><strong>Rebalance</strong></td><td>回补/重新平衡</td><td>价格回到 FVG 区域填补"缺口"</td></tr>
+<tr><td><strong>Displacement</strong></td><td>位移</td><td>大实体K线的强势推动，突破某个关键位</td></tr>
+<tr><td><strong>Inversion</strong></td><td>反转（FVG）</td><td>价格穿过FVG并反向运行，FVG从支撑/阻力变成相反角色</td></tr>
+<tr><td><strong>Daily Bias</strong></td><td>日偏差/日偏向</td><td>基于流动性逻辑得出的当日方向性判断</td></tr>
+<tr><td><strong>Bias</strong></td><td>偏向/偏差</td><td>对市场方向的预判（看多/看空）</td></tr>
+<tr><td><strong>Narrative</strong></td><td>叙事</td><td>对价格走势的"故事线"或逻辑推演</td></tr>
+<tr><td><strong>Top-Down</strong></td><td>自上而下</td><td>从高时间框架定方向，逐级下钻找入场</td></tr>
+<tr><td><strong>Intermediate Term</strong></td><td>中期</td><td>在 top-down 框架里承上启下的中间层级</td></tr>
+<tr><td><strong>State of Delivery</strong></td><td>delivery 状态</td><td>价格传递方向的状态（涨/跌/盘），ICT 术语</td></tr>
+<tr><td><strong>Shift Structure</strong></td><td>换结构</td><td>价格突破前一摆动点，改变 delivery 方向</td></tr>
+<tr><td><strong>Market Maker Buy/Sell Model</strong></td><td>做市商买/卖模型</td><td>ICT 的价格运行模板：扫流动性→回 FVG→继续趋势</td></tr>
+<tr><td><strong>Order Block</strong></td><td>订单块</td><td>大资金入场留下的K线区域，后续价格常在此反应</td></tr>
+<tr><td><strong>Stop</strong></td><td>止损</td><td>单笔交易的风险控制位</td></tr>
+<tr><td><strong>Runner</strong></td><td>跑利润（仓位）</td><td>把部分仓位留着不全部止盈，继续追踪趋势</td></tr>
+<tr><td><strong>Sweep</strong></td><td>扫</td><td>价格快速刺穿一个流动性位（扫止损）</td></tr>
+<tr><td><strong>Tagged In</strong></td><td>被触发/进场</td><td>限价单被触碰、成交</td></tr>
+<tr><td><strong>Consolidating</strong></td><td>整理/盘整</td><td>价格在一个小区间内横向运动</td></tr>
+<tr><td><strong>R (Risk Multiple)</strong></td><td>风险倍数</td><td>盈亏比，3.23R = 3.23倍初始风险</td></tr>
+</table>
+<h3>4.2 本集英文语法与表达整理</h3>
+<p><strong>① 定义句式：A is just B / A is B in the form of C</strong></p>
+<blockquote>*Internal range liquidity is just a fair value gap. External range liquidity is a swing high or a swing low, in the form of buy side or sell side liquidity.*</blockquote>
+<ul>
+<li><code>is just</code>：口语化地表示"就是/不过是"，语气轻巧但定义精准，让复杂概念听起来简单。</li>
+<li><code>in the form of</code>：以……的形式存在/呈现。这里的逻辑是：外部流动性的<strong>本质</strong>是摆动点，它的<strong>表现形式</strong>是买方/卖方流动性。</li>
+<li>这种"先给本质、再给表现形式"的定义法，非常适合技术概念讲解。</li>
+</ul>
+<p><strong>② 设问推进逻辑（自问自答教学法）</strong></p>
+<blockquote>*After taking external range liquidity, price will seek internal range liquidity. After reaching internal range liquidity, price will reach for an old high or old low — or external range liquidity. So, after reaching this external liquidity here, where can we anticipate price reaching for? This fair value gap in here. Now, after price reaches into this fair value gap here, where can we anticipate it to go? External range liquidity — so, down here.*</blockquote>
+<ul>
+<li>整段是典型的<strong>设问→解答→再设问→再解答</strong>推进法，让听众一步步跟着逻辑走。</li>
+<li><code>where can we anticipate...?</code>：这个句型在这一集里出现了十几次，是作者标志性的引导式教学语言。<code>anticipate</code> 比 <code>expect</code> 更正式一点，带有"基于逻辑推导的预期"意味。</li>
+<li>每给一个解答立即给下一个情境设问，形成逻辑链条——这是最高效的教学节奏。</li>
+</ul>
+<p><strong>③ 条件句表达"如果……那么……"</strong></p>
+<blockquote>*If we're going to retrace, where can we likely see price reaching for?*</blockquote>
+<blockquote>*If we're going to continue lower, where is price likely to reach for?*</blockquote>
+<ul>
+<li><code>if + be going to + do</code>：表示"如果价格（按照当前迹象）将要……"，比 <code>if + 一般现在时</code> 更强调<strong>当前正在显现的趋势</strong>。</li>
+<li><code>be likely to</code>：高频表达，比 <code>will</code> 更柔和，承认不确定性。</li>
+</ul>
+<p><strong>④ 承接与转折</strong></p>
+<blockquote>*Now, we don't have internal yet — we don't have a fair value gap formed — so let's see what happens on this next candle.*</blockquote>
+<blockquote>*Now, it's not always going to be perfect, as you notice here, as we do not get a retracement and we just continue higher. But understanding the relationship...*</blockquote>
+<ul>
+<li><code>Now</code> 在口语里不仅表时间，更是逻辑转换词："现在来看/那么"。</li>
+<li>破折号 <code>—</code> 的用法：口语停顿的书面化，表示补充解释。<code>we don't have internal yet — we don't have a fair value gap formed</code> 两句话说的是同一件事，第二句是第一句的解释——这是 Trades 标志性的"先说术语、再说通俗解释"教学风格。</li>
+<li><code>But</code> 表示转折但<strong>不否定前文</strong>："虽然不完美，但是……"，留住听众信心。</li>
+</ul>
+<p><strong>⑤ Top-Down 框架的表达方式</strong></p>
+<blockquote>*With this providing our bias, we will drop down to the lower time frames — in this case, the 5-minute and the 1-minute — to look for short setups to this old low.*</blockquote>
+<ul>
+<li><code>with + 名词 + 现在分词</code>：表"凭借/基于……"，把因果关系浓缩进一个短语。</li>
+<li><code>drop down to</code>：口语化的"降级/下钻"，比 <code>switch to</code> 更有层次感。</li>
+<li><code>to this old low</code>：<code>to</code> 表目标方向，"做空以够那个老低点"。</li>
+</ul>
+<p><strong>⑥ 状态变化的描述</strong></p>
+<blockquote>*So now that we've reached into internal, respected it, where can we reach? External.*</blockquote>
+<ul>
+<li><code>now that</code> 引导原因状语从句："既然现在已经……"。</li>
+<li><code>respected it</code>：ICT 体系的专有说法——价格"尊重"一个 FVG 就是从它反应、不穿透它。不是客观描述，而是体系内的"人格化"表达。</li>
+</ul>
+<p>---</p>
+<h2>五、实例复盘（本集全部实战例子，逐个配图详解）</h2>
+<h3>例 1 — 标普期货周线图：完整的外部→内部→外部循环</h3>
+<p>作者用 S&P 期货周线完整演示了一个外部→内部→外部的循环：</p>
+<p>1. 价格在某个老低点（外部流动性）下方未能做出位移 → bias 看多，预期回撤去内部（FVG）。</p>
+<p>2. 价格进入 FVG（内部流动性），尊重它 → 预期去外部。</p>
+<p>3. 价格向下到外部流动性 → 形成新的 FVG（内部流动性）。</p>
+<p>4. 价格以位移穿过 FVG，<strong>造成反转（inversion）</strong> → bias 翻多。</p>
+<p>5. 价格直接上冲老高点（外部），中间没有回撤——作者直言"不是每次都会完美回撤，但理解这个关系就够了"。</p>
+<p>关键要点：<strong>周线图上的内部/外部关系能给你一整周的方向性 bias。</strong></p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/spx_weekly_external.png" alt="spx_weekly_external"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">spx_weekly_external</figcaption></figure></p>
+<p><strong>实例配图：标普周线——外部流动性（老低点）</strong>。红圈标记的是价格未能向下位移的老低点（摆动低点），这是外部流动性。如果价格要回撤，去哪？——去内部（FVG）。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/spx_external_to_internal.png" alt="spx_external_to_internal"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">spx_external_to_internal</figcaption></figure></p>
+<p><strong>实例配图：标普周线——价格到达内部流动性（FVG）</strong>。价格从外部回到这个 FVG 区域（蓝框），完成了外部→内部的第一步。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/spx_internal_to_external.png" alt="spx_internal_to_external"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">spx_internal_to_external</figcaption></figure></p>
+<p><strong>实例配图：标普周线——内部到外部 + 反转FVG</strong>。价格以位移（大实体K线）穿过 FVG 向下到达外部流动性，同时这个 FVG 变成反转（inversion），bias 从空翻多。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/spx_inversion_fvg.png" alt="spx_inversion_fvg"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">spx_inversion_fvg</figcaption></figure></p>
+<p><strong>实例配图：标普周线——价格直接向上冲老高点</strong>。反转后 bias 看多，价格直冲老高点（外部）。作者说没回撤也正常——理解逻辑比追完美形态更重要。</p>
+<h3>例 2 — 黄金 60 分钟 Top-Down 实战（赚了 3.23R）</h3>
+<p>完整的三级下钻框架：</p>
+<ul>
+<li><strong>60 分钟（bias 层）</strong>：FVG 被尊重、向下走 → 内部→外部 bias = 看空，目标老低点。</li>
+<li><strong>5 分钟（结构层）</strong>：在 FVG 里打出高点后向下位移 → 等一个确认入场信号。</li>
+<li><strong>1 分钟（入场层）</strong>：在 order block 入场，止损放高点，目标小时级低点 → 结果 3.23R。</li>
+</ul>
+<p>每一步都有逻辑推导，三层之间不是"同时看三个图"，而是一级一级向下传递 bias 和目标。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gold_60min_setup.png" alt="gold_60min_setup"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gold_60min_setup</figcaption></figure></p>
+<p><strong>实例配图：黄金 60 分钟——内部→外部 bias</strong>。图上标出当前 FVG（内部流动性）和下方的老低点（外部流动性）。价格尊重 FVG 后向下，bias 就是去扫那个老低点。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gold_5min_fvg.png" alt="gold_5min_fvg"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gold_5min_fvg</figcaption></figure></p>
+<p><strong>实例配图：黄金 5 分钟——等确认入场</strong>。价格在 FVG 区域内打出高点后尊重它，这是"确认入场"的前提。箭头处是作者说"这里尊重了，所以我降级去 1 分钟"的位置。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gold_1min_entry.png" alt="gold_1min_entry"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gold_1min_entry</figcaption></figure></p>
+<p><strong>实例配图：黄金 1 分钟——order block 入场</strong>。价格扫掉上方流动性后回落到这个 order block 区域（框出）。箭头向上那个高点就是止损位。目标：小时图上的老低点。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gold_result_323r.png" alt="gold_result_323r"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gold_result_323r</figcaption></figure></p>
+<p><strong>实例配图：黄金结果——3.23R</strong>。价格按预期打到目标，3.23 倍风险的收益。三层框架（60m bias → 5m 结构 → 1m 入场）完整走通。</p>
+<h3>例 3 — GBP/JPY：跨时间框架的内部→外部 + sell model 翻 buy model</h3>
+<p>这是全片最复杂的例子，展示了从一个方向翻到另一个方向的完整逻辑：</p>
+<p>1. <strong>周线视角</strong>：老高点被吃掉（外部流动性被扫了）→ 找内部流动性（FVG 在上方）。</p>
+<p>2. <strong>4 小时视角</strong>：价格跌穿老高点后回撤进 FVG → 向下位移扫低点 → 到达内部流动性。</p>
+<p>3. <strong>关键转折</strong>：价格突破前高，<strong>delivery 状态改变（shift structure）</strong> → 从 sell model 翻成 buy model。</p>
+<p>4. <strong>新 4H 框架</strong>：4 小时上出现新 FVG = 新的内部流动性 → bias 看多去 4 小时外部流动性。</p>
+<p>5. <strong>15 分钟入场</strong>：价格在 4H FVG 上整理 → sweep 低点后换结构 → order block 入场，目标 4H 外部+周线外部。</p>
+<p>作者最后总结：这是"大的做市商买模型里套了一个小的做市商买模型，两层都是用内部→外部框定的"。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gbpjpy_weekly_setup.png" alt="gbpjpy_weekly_setup"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gbpjpy_weekly_setup</figcaption></figure></p>
+<p><strong>实例配图：GBP/JPY 周线——标出三层流动性</strong>。老高点被吃掉（外部 ✓），FVG 在上方（内部），再往上还有新的外部流动性（更上面的老高点）。一次性把"外→内→外"的路径标好。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gbpjpy_4h_setup.png" alt="gbpjpy_4h_setup"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gbpjpy_4h_setup</figcaption></figure></p>
+<p><strong>实例配图：GBP/JPY 4 小时——外部扫掉后回 FVG</strong>。价格跌穿老高点（外部）后正在回撤进上方 FVG。这里同时也是周线 FVG 的边界——4H 老低点=周线 FVG 边。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gbpjpy_sell_to_buy.png" alt="gbpjpy_sell_to_buy"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gbpjpy_sell_to_buy</figcaption></figure></p>
+<p><strong>实例配图：GBP/JPY——结构切换：sell model → buy model</strong>。价格突破前一个高点（红色虚线），delivery 状态改变。这是 sell model 翻 buy model 的信号，bias 翻多。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gbpjpy_15min_entry.png" alt="gbpjpy_15min_entry"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gbpjpy_15min_entry</figcaption></figure></p>
+<p><strong>实例配图：GBP/JPY 15 分钟——order block 入场</strong>。价格在 4H FVG 上整理，出现向下 sweep（扫低点），然后换结构上破。入场在这个 order block 区域，止损放在被 sweep 的低点下方。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gbpjpy_target_hit.png" alt="gbpjpy_target_hit"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gbpjpy_target_hit</figcaption></figure></p>
+<p><strong>实例配图：GBP/JPY——4 小时外部目标被打到</strong>。从 15 分钟入场后一波强拉升，4 小时外部流动性被打到。剩下的仓位（runner）继续看向周线老高点。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gbpjpy_weekly_review.png" alt="gbpjpy_weekly_review"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gbpjpy_weekly_review</figcaption></figure></p>
+<p><strong>实例配图：GBP/JPY 周线回顾——完整路径</strong>。外→内→外→内→外，两层做市商买模型叠在一起。整体回顾：sell model→buy model 切换 + 内部→外部框架。</p>
+<h3>例 4 — NQ 5 分钟：证明任何时间框架都通用</h3>
+<p>最后一个例子用 NQ 的 5 分钟图快速走了一遍：</p>
+<ul>
+<li>开盘区间形成 → 一边被吃掉 → 外部→内部→外部反复切换</li>
+<li>每一步都问"接下来去哪？"——有 FVG 就去内部、没 FVG 就等形成</li>
+<li>形成 FVG 后就是内部→外部的新循环</li>
+</ul>
+<p>作者想说明的是：<strong>别觉得这套东西只在高时间框架有效，5 分钟同样能用</strong>。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/nq_5min_any_tf.png" alt="nq_5min_any_tf"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">nq_5min_any_tf</figcaption></figure></p>
+<p><strong>实例配图：NQ 5 分钟——任何时间框架都通用</strong>。图中标记了多次外部→内部→外部的切换。每次吃掉外部后找最近的 FVG（内部），到达内部后继续找外部——无限循环。</p>
+<p>---</p>
+<h2>六、概念详解配图（图跟内容走，逐张详解）</h2>
+<h3>6.1 先看 PDF：核心定义</h3>
+<p>视频开场直接用 PDF 把定义讲清，两个术语、一个关系。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/intro_pdf.png" alt="intro_pdf"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">intro_pdf</figcaption></figure></p>
+<p><strong>图：PDF 开场——定义内部 & 外部流动性</strong>。第一行：内部范围流动性 = FVG（公允价值缺口）。第二行：外部范围流动性 = 摆动高/低点（买方/卖方流动性）。这是整集的基石，后面所有例子都建立在这两个定义之上。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/definition_internal_external.png" alt="definition_internal_external"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">definition_internal_external</figcaption></figure></p>
+<p><strong>图：内部 vs 外部流动性详解</strong>。左侧：内部 = FVG（三根K线间跳过的那段"真空"）。右侧：外部 = 摆动高低点，图上用红色/绿色箭头标记。两种流动性是价格来回跑的"锚点"。</p>
+<h3>6.2 核心机制：外部→内部→外部的循环</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/cycle_diagram.png" alt="cycle_diagram"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">cycle_diagram</figcaption></figure></p>
+<p><strong>图：外部→内部→外部的循环图</strong>。PDF 上用箭头画出的完整路径：价格吃掉外部（摆动点）→ 回到内部（FVG）→ 再次去外部。这个来回就是 Daily Bias 的根源：你只需要判断价格当前在这个循环的哪一步。</p>
+<h3>6.3 标普周线实例回顾</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/spx_weekly_external.png" alt="spx_weekly_external"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">spx_weekly_external</figcaption></figure></p>
+<p><strong>图：标普周线——外部流动性</strong>。左边红圈：价格未能在这个老低点下方做出位移——这是"外部流动性被验证"的形态。当价格无法击穿老低点时，bias 自然偏向"它会回撤去找内部（FVG）"。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/spx_external_to_internal.png" alt="spx_external_to_internal"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">spx_external_to_internal</figcaption></figure></p>
+<p><strong>图：标普周线——价格到达内部（FVG）</strong>。蓝框标记的是 FVG，价格从外部回来填上了它。这是"外部→内部"的标准走法。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/spx_internal_to_external.png" alt="spx_internal_to_external"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">spx_internal_to_external</figcaption></figure></p>
+<p><strong>图：标普周线——内部到外部 + 反转 FVG</strong>。价格穿过 FVG 向下走（位移），这个动作本身就是"内部→外部"。FVG 被穿过之后不再是回补区而是"反转区"——bias 从空翻多。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/spx_inversion_fvg.png" alt="spx_inversion_fvg"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">spx_inversion_fvg</figcaption></figure></p>
+<p><strong>图：标普周线——无回撤直接上冲</strong>。反转后价格没有像"理想情况"那样先回撤，而是直接上冲老高点。作者说：不完美但逻辑成立，理解关系比追完美形态更重要。</p>
+<h3>6.4 黄金 Top-Down 三件套</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gold_60min_setup.png" alt="gold_60min_setup"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gold_60min_setup</figcaption></figure></p>
+<p><strong>图：黄金 60 分钟定 bias</strong>。FVG 在上方（内部），老低点在下方（外部）。价格在 FVG 处被尊重，bias 就是"向下走到外部"。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gold_5min_fvg.png" alt="gold_5min_fvg"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gold_5min_fvg</figcaption></figure></p>
+<p><strong>图：黄金 5 分钟——等确认信号</strong>。价格在 5 分钟 FVG 里打出高点，然后尊重它向下位移——这是降级去 1 分钟的"绿灯"。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gold_1min_entry.png" alt="gold_1min_entry"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gold_1min_entry</figcaption></figure></p>
+<p><strong>图：黄金 1 分钟——精准入场</strong>。箭头指向 order block 入场区。价格先向上扫了流动性，然后回落，这里是做空的最佳位置。止损在刚才被扫的那个高点上方。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gold_result_323r.png" alt="gold_result_323r"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gold_result_323r</figcaption></figure></p>
+<p><strong>图：黄金结果——3.23R</strong>。价格一路下行打到小时图目标。3.23 倍风险。三层框架从头串到尾：bias 对了、结构认对了、入场精准了。</p>
+<h3>6.5 GBP/JPY：从卖模型翻买模型</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gbpjpy_weekly_setup.png" alt="gbpjpy_weekly_setup"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gbpjpy_weekly_setup</figcaption></figure></p>
+<p><strong>图：GBP/JPY 周线——三层同时标好</strong>。已经吃掉的外部（老高点）、当前的内部（FVG）、未来的外部（更高处的老高点）。这就像下棋提前看三步。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gbpjpy_4h_setup.png" alt="gbpjpy_4h_setup"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gbpjpy_4h_setup</figcaption></figure></p>
+<p><strong>图：GBP/JPY 4 小时——回 FVG</strong>。价格跌穿外部后正在回撤进 FVG。注意：4H 上的"老低点"同时也是周线 FVG 的构成部分——时间框架之间是连通的。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gbpjpy_sell_to_buy.png" alt="gbpjpy_sell_to_buy"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gbpjpy_sell_to_buy</figcaption></figure></p>
+<p><strong>图：GBP/JPY——结构切换</strong>。突破前高（红色虚线），delivery 状态改变。这是全片最重要的一帧：从 sell model 翻 buy model 的确认信号。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gbpjpy_15min_entry.png" alt="gbpjpy_15min_entry"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gbpjpy_15min_entry</figcaption></figure></p>
+<p><strong>图：GBP/JPY 15 分钟入场</strong>。FVG 上整理 → 向下 sweep 低点 → 换结构上破 → order block 入场。所有入场元素都齐了。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gbpjpy_target_hit.png" alt="gbpjpy_target_hit"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gbpjpy_target_hit</figcaption></figure></p>
+<p><strong>图：GBP/JPY——4H 目标到达</strong>。一波强拉升，4H 外部流动性被吃掉。图中可以清楚看到从入场点到目标的价格轨迹。</p>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/gbpjpy_weekly_review.png" alt="gbpjpy_weekly_review"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">gbpjpy_weekly_review</figcaption></figure></p>
+<p><strong>图：GBP/JPY 周线全景回顾</strong>。完整路径一目了然：sell model → buy model → 两层 market maker buy model 叠在一起，全部用内部→外部框定。</p>
+<h3>6.6 NQ 5 分钟：通用性证明</h3>
+<p><figure style="margin:22px 0"><img src="https://img.ktzwei.top/ict/07/nq_5min_any_tf.png" alt="nq_5min_any_tf"/><figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">nq_5min_any_tf</figcaption></figure></p>
+<p><strong>图：NQ 5 分钟——任何 TF 通用</strong>。开盘区间 → 扫外部 → 回内部 → 再外部 → 新 FVG → 再内部……循环往复。5 分钟图上同样清晰运转。<strong>概念与 TF 无关</strong>。</p>
+<p>---</p>
+<h2>七、给 HYPE 实战的落地要点（我的延伸）</h2>
+<p>把这集套到你 HYPE-USDT 15 分钟交易上：</p>
+<p>1. <strong>先画"内外锚点"</strong>：每天开盘第一件事——在 HYPE 15m 图上标出最近的外部流动性（前日高/低、前日摆动点）和最近的内部流动性（未补的 15m/1H FVG）。你已经在第 2 集学了怎么识别这些，现在串起来。</p>
+<p>2. <strong>判断价格在循环的哪一步</strong>：价格刚吃掉一个外部（扫了高低点）？那下一步大概率是回内部（FVG）——这就是你的 bias。价格刚回补了 FVG？下一步大概率去下一档外部——顺着做。</p>
+<p>3. <strong>Top-Down for 15m</strong>：1H 定 bias（内部→外部还是外部→内部），15m 找结构（等 FVG 尊重/等 delivery 换手），5m/1m 找入场（order block + sweep）。三层不要求每次都做到，但每次看盘先按这个顺序过一遍。</p>
+<p>4. <strong>Sell model → Buy model 切换是最值钱的判断</strong>：价格突破前一高点=delivery 状态改变=bias 翻多。在 HYPE 15m 上这个信号往往出现在亚洲尾/伦敦初，是你翻仓的最佳窗口。</p>
+<p>5. <strong>用"下一个去哪"替代"现在涨还是跌"</strong>：TTrades 整集反复用一个问句：<code>where can we anticipate price to go?</code>。这个问题比"做多还是做空"更有用——因为答案不在 K 线颜色里，在流动性位的地理位置上。</p>
+<p>6. <strong>15m "任意 TF 通用"思维</strong>：本集最后一个例子 NQ 5m 证明：内部→外部框架在任何时间框架上都能运转。你的 HYPE 15m 完全适用，甚至 5m、1m 也可以——关键不是 TF，是你能不能一眼看到那个 FVG 和那个未被扫的高低点。</p>
+<p>7. <strong>runner（留仓位）思维</strong>：像 GBP/JPY 例子里那样，先在 4H 外部止盈一部分，留 runner 去周线外部（更高目标）。HYPE 15m 上你可以在 15m 外部止盈 70%，留 30% runner 去 1H 外部。</p>
+<blockquote>建议：每天开盘前用 30 秒画三条线——最近一个未补 FVG（内部）、最近一个未扫高/低点（外部）、突破该高/低点后的下一个外部。然后你的交易就是"等价格从这儿走到那儿"。</blockquote>
+<p>---</p>
+<p>*笔记完成于 2026-08-06 | Episode 7/140*</p>
+<p style="color:var(--muted);margin-top:40px;border-top:1px solid var(--line);padding-top:14px;font-size:.85em">
+ICT Concepts 学习合集 · 每集从视频字幕整理 + 图解 · 持续更新</p>
+</body></html>
