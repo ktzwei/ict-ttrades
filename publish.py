@@ -55,7 +55,7 @@ img::after{content:attr(alt);display:block;color:var(--muted);font-size:.85em;te
 """
 
 def inline_images(md_text, assets_dir, prefix):
-    """把 ![alt](frames/xx.png) 转成 <img> 用 R2 图床 URL，并保留图的说明文字。"""
+    """把 ![alt](frames/xx.png) 转成 <img> 用 base64 内嵌，并保留图的说明文字。"""
     def repl(m):
         alt = m.group(1)
         src = m.group(2)
@@ -68,10 +68,9 @@ def inline_images(md_text, assets_dir, prefix):
             candidates.append(os.path.join(assets_dir, src))
         for p in candidates:
             if os.path.exists(p):
-                remote = f"{prefix}/{os.path.basename(p)}"
-                url = upload_to_r2(p, remote)
+                b64 = base64.b64encode(open(p,'rb').read()).decode()
                 return (f'<figure style="margin:22px 0">'
-                        f'<img src="{url}" alt="{alt}"/>'
+                        f'<img src="data:image/png;base64,{b64}" alt="{alt}"/>'
                         f'<figcaption style="color:var(--muted);font-size:.9em;text-align:center;margin-top:4px">{alt}</figcaption></figure>')
         return f'<p style="color:#f87171">⚠️ 缺失配图: {src}</p>'
     return re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', repl, md_text)
